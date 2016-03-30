@@ -12,5 +12,9 @@ package country;
 public class Program {
     public static void main(String args[])
     {
+        CountryController mainCountry = new CountryController();
+        System.out.println("go go go");
+        mainCountry.run();
+        mainCountry.run();
     }
 }

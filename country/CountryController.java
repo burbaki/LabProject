@@ -6,12 +6,25 @@ public class CountryController {
 
 	private Market market;
 	private Money cashOfCountrie;
-	private DayChanger dayChanger;
+	private DayChanger dayChanger = new DayChanger();
 	private BuildingContainer buildingContainer;
 
-	public void makeDailyTasks() {
-		// TODO - implement CountryController.makeDailyTasks
-		throw new UnsupportedOperationException();
+	private void makeDailyTasks() {
+		          System.out.println("country.CountryController.makeDailyTasks()");
+                          System.out.println(dayChanger.getCounterOfDays());
 	}
-
+        
+         
+         
+         public void run()
+         {
+            
+             dayChanger.runOneDay();
+             makeDailyTasks();
+         }
+         
+         public void runDays(int Int)
+         {
+             
+         }
 }

@@ -1,10 +1,10 @@
 package enumerationClasses;
 
 public enum TypeInstrument {
-	Drill,
-	Combain,
-	Bench,
-	Saw,
-	Pump,
-	Equipment
+	DRILL,
+	COMBAIN,
+	BENCH,
+	SAW,
+	PUMP,
+	EQUIPMENT
 }

@@ -1,8 +1,8 @@
 package enumerationClasses;
 
 public enum TypeProduction {
-	Fuel,
-	Ore,
-	Resource,
-	Instrument
+	FUEL,
+	ORE,
+	RESOURSE,
+	INSRUMENT
 }

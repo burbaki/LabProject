@@ -1,9 +1,9 @@
 package enumerationClasses;
 // сделать перечисления
 public enum Level {
-	1,
-	2,
-	3,
-	4,
-	5
+	FIRST,
+	SECOND,
+	THIRD,
+	FOURTH,
+	FIFTH
 }
