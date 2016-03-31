@@ -1,36 +1,34 @@
 package country;
 
 import building.BuildingLifecycleManager;
+import enumerationClasses.TypeProduction;
+import java.util.List;
 
 public class BuildingContainer {
 
-	private BuildingLifecycleManager[] listOfBuildings; //list!!!
+	private List<BuildingLifecycleManager> listOfBuildings; 
+
+	
 
 	/**
 	 * 
-	 * @param Building
+	 * @param TypeProduction
 	 */
-	public void addBuilding(int Building) {
-		// TODO - implement BuildingContainer.addBuilding
-		throw new UnsupportedOperationException();
+	public void buildBuilding(TypeProduction type) {
+            if(availableToBuild(type))
+            {
+                BuildingLifecycleManager newBuilding = new BuildingLifecycleManager(type);
+                listOfBuildings.add(newBuilding);
+            }
+            
 	}
 
 	/**
 	 * 
 	 * @param TypeProduction
 	 */
-	public void buildBuilding(int TypeProduction) {
-		// TODO - implement BuildingContainer.buildBuilding
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param TypeProduction
-	 */
-	public boolean availableToBuild(int TypeProduction) {
-		// TODO - implement BuildingContainer.availableToBuild
-		throw new UnsupportedOperationException();
+	public boolean availableToBuild(TypeProduction type) {
+		;
 	}
 
 }

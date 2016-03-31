@@ -1,3 +1,5 @@
+package building;
+
 public class LifeBar {
 
 	private int Health;

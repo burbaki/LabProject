@@ -1,8 +1,12 @@
 package enumerationClasses;
 
 public enum TypeProduction {
-	FUEL,
-	ORE,
-	RESOURSE,
-	INSRUMENT
+    COIL,
+    WOOD,
+    OIL,    
+    IRON,
+    COOPER,
+    SILICON,
+    STEEL,
+    BOARDS,
 }

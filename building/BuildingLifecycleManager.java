@@ -7,10 +7,14 @@ public class BuildingLifecycleManager {
 	private ResourceBuilding building;
 	
 
-	/**
-	 * 
-	 * @param Instrument
-	 */
+	public BuildingLifecycleManager(TypeProduction type)
+        {
+            // read constructor
+        }
+
+    public BuildingLifecycleManager() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	public void deployInstrument(int Instrument) {
 		// TODO - implement BuildingLIfecycleManager.deployInstrument
 		throw new UnsupportedOperationException();
@@ -31,11 +35,7 @@ public class BuildingLifecycleManager {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param TypeProduction
-	 */
-	public void build(int TypeProduction) {
+	public void buildBuilding(int TypeProduction) {
 		// TODO - implement BuildingLIfecycleManager.build
 		throw new UnsupportedOperationException();
 	}

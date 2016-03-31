@@ -16,5 +16,6 @@ public class Program {
         System.out.println("go go go");
         mainCountry.run();
         mainCountry.run();
+       
     }
 }
