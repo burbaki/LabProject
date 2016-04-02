@@ -5,7 +5,7 @@ import market.Market;
 public class CountryController {
 
 	private Market market = new Market();
-	private Money cashOfCountrie = new Money(1000);
+	private static Money cashOfCountrie = new Money(1000);
 	private final DayChanger dayChanger;
 	private BuildingContainer buildingContainer = new BuildingContainer();
 

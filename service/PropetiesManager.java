@@ -3,18 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package enumerationClasses;
+package service;
 
-/**
- *
- * @author Burbaki
- */
-public enum TypeInstrument {
-    DRILL,
-    COMBAIN,
-    BENCH,
-    SAW,
-    PUMP,
-    EQUIPMENT,
-    MICROSCEMES
+
+public class PropetiesManager {
+    
+    
 }

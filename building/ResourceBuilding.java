@@ -1,13 +1,17 @@
 package building;
 
 import boxClasses.Weight;
-import enumerationClasses.TypeProduction;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+import enumerationClasses.TypeBuilding;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ResourceBuilding {
 
+        private static int count = 0;
 	private Stock stock;
-	private Instrument[] instruments;
-	private TypeProduction[] outputProduction;
+	private List<Instrument> instruments = new LinkedList<>();
+	private TypeBuilding outputProduction;
 	private Weight BasicProductionPowerPerDay;
 	private int idBuilding;
 	private FinanceManager financeManager;
@@ -20,7 +24,7 @@ public class ResourceBuilding {
 	 * 
 	 * @param TypeProduction
 	 */
-	public ResourceBuilding(int TypeProduction) {
+	public ResourceBuilding(TypeBuilding type) {
 		// TODO - implement ResourceBuilding.ResourceBuilding
 		throw new UnsupportedOperationException();
 	}
