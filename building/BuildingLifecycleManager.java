@@ -14,13 +14,8 @@ public class BuildingLifecycleManager {
        this.building = new ResourceBuilding(type);       
     }
 
-    public BuildingLifecycleManager() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void deployInstrument(int Instrument) {
-        // TODO - implement BuildingLIfecycleManager.deployInstrument
-        throw new UnsupportedOperationException();
+    public void deployInstrument(Instrument instrument) {
+        building.deployInstrument(instrument);
     }
 
     public void upgrade() {

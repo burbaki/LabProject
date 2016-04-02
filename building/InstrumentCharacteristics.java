@@ -5,34 +5,26 @@ import enumerationClasses.TypeInstrument;
 
 public class InstrumentCharacteristics {
 
-	private TypeInstrument typeInstrument;
-	private Level level;
-	private double ProductionInfluence;
-	private double brokingSpeed1healthInDays;
+    private TypeInstrument typeInstrument;
+    private Level level;
+    private double productionInfluence;
 
-	/**
-	 * 
-	 * @param TypeInstrument
-	 * @param LevelOfInstrument
-	 */
-	public InstrumentCharacteristics(int TypeInstrument, int LevelOfInstrument) {
-		// TODO - implement InsrumentCharacteristics.InsrumentCharacteristics
-		throw new UnsupportedOperationException();
-	}
+    public InstrumentCharacteristics(TypeInstrument type, Level lvl) {
+        typeInstrument = type;
+        level = lvl;
+        productionInfluence = InstrumentProperty.getproductionInfluence(type);
+    }
 
-	public void GetHealth() {
-		// TODO - implement InsrumentCharacteristics.GetHealth
-		throw new UnsupportedOperationException();
-	}
-
-	public void GetCreateTime() {
-		// TODO - implement InsrumentCharacteristics.GetCreateTime
-		throw new UnsupportedOperationException();
-	}
-
-	public double getProductionInfluence() {
-		// TODO - implement InsrumentCharacteristics.getProductionInfluence
-		throw new UnsupportedOperationException();
-	}
+    public Level getLevel()
+    {
+        return level;
+    }
+    public TypeInstrument getTypeInstrument()
+    {
+        return typeInstrument;
+    }
+    public double getProductionInfluence() {
+        return productionInfluence;
+    }
 
 }

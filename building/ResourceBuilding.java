@@ -43,4 +43,8 @@ public class ResourceBuilding {
 		throw new UnsupportedOperationException();
 	}
 
+    void deployInstrument(Instrument instrument) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

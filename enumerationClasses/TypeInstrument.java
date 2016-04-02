@@ -5,21 +5,16 @@
  */
 package enumerationClasses;
 
-
-public enum TypeBuilding {
+/**
+ *
+ * @author Burbaki
+ */
+public enum TypeInstrument {
     DRILL,
     COMBAIN,
     BENCH,
     SAW,
     PUMP,
     EQUIPMENT,
-    MICROSCEMES,
-    COIL,
-    WOOD,
-    OIL,    
-    IRON,
-    COOPER,
-    SILICON,
-    STEEL,
-    BOARDS
+    MICROSCEMES
 }

@@ -5,22 +5,26 @@ import market.Market;
 public class CountryController {
 
 	private Market market = new Market();
-	private static Money cashOfCountrie = new Money(1000);
-	private final DayChanger dayChanger;
-	private BuildingContainer buildingContainer = new BuildingContainer();
+	private  Money cashOfCountry = new Money(1000);
+	public static DayChanger dayChanger;
+	private BuildingContainer buildingContainer = new BuildingContainer(this);
 
     public CountryController() {
         this.dayChanger = new DayChanger();
         
     }
 
+    
 	private void makeDailyTasks() {
 		          System.out.println("country.CountryController.makeDailyTasks()");
                           System.out.println(dayChanger.getCounterOfDays());
 	}
         
          
-         
+         public Money getCashOfCountry()
+         {
+             return cashOfCountry;                     
+         }
          public void run()
          {            
              dayChanger.runOneDay();

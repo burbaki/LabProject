@@ -8,6 +8,7 @@ package country;
 /**
  *
  * @author Burbaki
+ * 
  */
 public class Program {
     public static void main(String args[])
@@ -15,7 +16,7 @@ public class Program {
         CountryController mainCountry = new CountryController();
         System.out.println("go go go");
         mainCountry.run();
-        mainCountry.run();
+     
        
     }
 }
