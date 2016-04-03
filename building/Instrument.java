@@ -13,6 +13,10 @@ public class Instrument {
         status = new StatusOfInstrument(type, dayChanger);
     }
 
+    public double getProductionInfluence()
+    {
+        return instrumentCharacteristics.getProductionInfluence();
+    }
     public String GetStatus() {
         return status.getStatus();
     }

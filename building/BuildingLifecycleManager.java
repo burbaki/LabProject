@@ -7,7 +7,7 @@ import enumerationClasses.TypeBuilding;
 
 public class BuildingLifecycleManager {
 
-    private Level level;
+    
     private ResourceBuilding building;
   
     public BuildingLifecycleManager(TypeBuilding type) {
@@ -19,8 +19,7 @@ public class BuildingLifecycleManager {
     }
 
     public void upgrade() {
-        // TODO - implement BuildingLIfecycleManager.upgrade
-        throw new UnsupportedOperationException();
+        if (building.getCash().compare(BuildingProperty.getLvlUpCost(building.getLevel())) > 1);
     }
 
     public boolean availableToUpgradable() {
@@ -29,22 +28,17 @@ public class BuildingLifecycleManager {
     }
 
     public void destroyBuilding() {
-        // TODO - implement BuildingLIfecycleManager.destroyBuilding
-        throw new UnsupportedOperationException();
+       
     }
 
-    public void buildBuilding(int TypeProduction) {
-        // TODO - implement BuildingLIfecycleManager.build
-        throw new UnsupportedOperationException();
-    }
     public String getlvl()
     {
-        return level.toString();
+        return building.getLevel();
     }
      
     public String getType()
     {
-        return level.toString() + building.toString();
+        return  building.toString();
     }
 
 }

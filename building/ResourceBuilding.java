@@ -1,7 +1,6 @@
 package building;
 
 import boxClasses.Weight;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import enumerationClasses.TypeBuilding;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,10 +19,6 @@ public class ResourceBuilding {
 		return this.idBuilding;
 	}
 
-	/**
-	 * 
-	 * @param TypeProduction
-	 */
 	public ResourceBuilding(TypeBuilding type) {
 		// TODO - implement ResourceBuilding.ResourceBuilding
 		throw new UnsupportedOperationException();
@@ -34,17 +29,8 @@ public class ResourceBuilding {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param Instrument
-	 */
-	public void deployInstrument(int Instrument) {
+	public void deployInstrument(Instrument instrument) {
 		// TODO - implement ResourceBuilding.deployInstrument
 		throw new UnsupportedOperationException();
-	}
-
-    void deployInstrument(Instrument instrument) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+	}  
 }

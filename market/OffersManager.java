@@ -1,44 +1,60 @@
 package market;
 
-public class OffersManager {
+import country.DayChanger;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-	private Offer[] listOfOffer;
-	private PriceList price;
+public class OffersManager implements Observer {
 
-	/**
-	 * 
-	 * @param id
-	 */
-	private void removeOffer(int id) {
-		// TODO - implement OffersManager.removeOffer
-		throw new UnsupportedOperationException();
-	}
+    private List<Offer> listOfOffer;
+    private PriceList price;
+    FinancialOperationController financialOperationController;
 
-	/**
-	 * 
-	 * @param Offer
-	 */
-	public void addOffer(int Offer) {
-		// TODO - implement OffersManager.addOffer
-		throw new UnsupportedOperationException();
-	}
+    OffersManager(FinancialOperationController financialOperationController, DayChanger dayChanger) {
+        this.financialOperationController = financialOperationController;
+    }
 
-	/**
-	 * 
-	 * @param Int
-	 */
-	public void makeOffer(int Int) {
-		// TODO - implement OffersManager.makeOffer
-		throw new UnsupportedOperationException();
-	}
+    private void removeOffer(int id) {
+        for (Offer o : listOfOffer) {
+            if (o.getID() == id) {
+                listOfOffer.remove(o);
+            }
+        }
+    }
 
-	public PriceList InstallPrice() {
-		// TODO - implement OffersManager.InstallPrice
-		throw new UnsupportedOperationException();
-	}
+    public void addOffer(ProductPack pack, int IDTraderBuyer) {
+        financialOperationController.pickUpProductionFromTrader(pack);
+        Offer newOffer = new Offer(pack, IDTraderBuyer, price.getPriceForOneTonn(pack.getTypeProduction()));
+        listOfOffer.add(newOffer);
+    }
 
-	public Offer[] getListOfOffer() {
-		return this.listOfOffer;
-	}
+    /**
+     *
+     * @param Int
+     */
+    public void makeOffer(int IDOffer, int IDTraderBuyer) {
+        for (Offer o : listOfOffer) {
+            if (o.getID() == IDOffer) {
+                financialOperationController.giveMoneyToTrader(o.getIDBuyer());
+                financialOperationController.givePackToTrader(o, IDTraderBuyer);
+                listOfOffer.remove(o);
+            }
+        }
+
+    }
+
+    public PriceList InstallPrice() {
+        // TODO - implement OffersManager.InstallPrice
+        throw new UnsupportedOperationException();
+    }
+
+    public List<Offer> getListOfOffer() {
+        return listOfOffer;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
 
 }

@@ -5,22 +5,26 @@ import enumerationClasses.TypeProduction;
 
 public class ProductPack {
 
-	private Weight weight;
-	private TypeProduction production;
+    private final Weight weight;
+    private final TypeProduction type;
 
-	/**
-	 * 
-	 * @param Weight
-	 * @param TypeProduction
-	 */
-	public ProductPack(int Weight, int TypeProduction) {
-		// TODO - implement ProductPack.ProductPack
-		throw new UnsupportedOperationException();
-	}
+    public ProductPack(Weight wgh, TypeProduction type) {
+        weight = wgh;
+        this.type = type;
+    }
 
-	public String getString() {
-		// TODO - implement ProductPack.getString
-		throw new UnsupportedOperationException();
-	}
+    public Weight getWeight() {
+        return weight;
+    }
+
+    public TypeProduction getTypeProduction() {
+        return type;
+    }
+
+    public String getString() {
+        String answer = new String();
+        return answer + weight.toString() + " " + type.toString();
+
+    }
 
 }
