@@ -8,9 +8,9 @@ public class Weight {
 	 * 
 	 * @param Double
 	 */
-	public Weight(int Double) {
-		// TODO - implement Weight.Weight
-		throw new UnsupportedOperationException();
+	public Weight(double value) {
+           this.weight = value;
+           
 	}
 
 	public double getWeight() {
@@ -30,18 +30,18 @@ public class Weight {
 	 * 
 	 * @param Weight
 	 */
-	public Weight addWeight(int Weight) {
-		// TODO - implement Weight.addWeight
-		throw new UnsupportedOperationException();
+	public Weight addWeight(Weight weight) {
+                  this.weight += weight.weight; 
+                  return this;
 	}
 
 	/**
 	 * 
 	 * @param Weight
 	 */
-	public Weight subWeight(int Weight) {
-		// TODO - implement Weight.subWeight
-		throw new UnsupportedOperationException();
+	public Weight subWeight(Weight weight) {
+		this.weight -= weight.weight; 
+                return this;
 	}
 
 	public String toString() {

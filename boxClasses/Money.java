@@ -9,9 +9,9 @@ public class Money {
      *
      * @param Double
      */
-    public Money(int Double) {
-        // TODO - implement Money.Money
-        throw new UnsupportedOperationException();
+    public Money(double value) {
+         this.money = value;
+        
     }
 
     public Double getMoney() {
@@ -27,9 +27,9 @@ public class Money {
      *
      * @param Money
      */
-    public Money AddMoney(Money money) {
-        // TODO - implement Money.AddMoney
-        throw new UnsupportedOperationException();
+    public Money addMoney(Money money) {
+      this.money += money.money; 
+      return this; 
     }
 
     /**
@@ -37,8 +37,8 @@ public class Money {
      * @param Money
      */
     public Money subMoney(Money money) {
-        // TODO - implement Money.subMoney
-        throw new UnsupportedOperationException();
+        this.money -= money.money; 
+      return this; 
     }
 
     public String toString() {
