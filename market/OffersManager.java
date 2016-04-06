@@ -1,18 +1,19 @@
 package market;
 
-import country.DayChanger;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import static country.CountryController.dayChanger;
 
-public class OffersManager implements Observer {
+import java.util.List;
+
+public class OffersManager {
 
     private List<Offer> listOfOffer;
     private PriceList price;
     FinancialOperationController financialOperationController;
 
-    OffersManager(FinancialOperationController financialOperationController, DayChanger dayChanger) {
+    OffersManager(FinancialOperationController financialOperationController) {
         this.financialOperationController = financialOperationController;
+        price = new PriceList(dayChanger,listOfOffer );
+
     }
 
     private void removeOffer(int id) {
@@ -25,14 +26,10 @@ public class OffersManager implements Observer {
 
     public void addOffer(ProductPack pack, int IDTraderBuyer) {
         financialOperationController.pickUpProductionFromTrader(pack);
-        Offer newOffer = new Offer(pack, IDTraderBuyer, price.getPriceForOneTonn(pack.getTypeProduction()));
+        Offer newOffer = new Offer(pack, IDTraderBuyer, price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight().toDouble());
         listOfOffer.add(newOffer);
     }
 
-    /**
-     *
-     * @param Int
-     */
     public void makeOffer(int IDOffer, int IDTraderBuyer) {
         for (Offer o : listOfOffer) {
             if (o.getID() == IDOffer) {
@@ -41,20 +38,10 @@ public class OffersManager implements Observer {
                 listOfOffer.remove(o);
             }
         }
-
-    }
-
-    public PriceList InstallPrice() {
-        // TODO - implement OffersManager.InstallPrice
-        throw new UnsupportedOperationException();
     }
 
     public List<Offer> getListOfOffer() {
         return listOfOffer;
     }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        
 
 }
