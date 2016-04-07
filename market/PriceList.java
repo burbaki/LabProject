@@ -38,14 +38,14 @@ public class PriceList implements Observer {
         for (Offer o : Offers) {
             TypeProduction type = o.getTypeProduction();
             Weight currentWeight = o.getWeight();
-            allWeightOfMarket.addWeight(currentWeight);
+            allWeightOfMarket.add(currentWeight);
             currentWeight.add(sumOfOffers.get(type));
             sumOfOffers.put(type, currentWeight);
         }
         Set<TypeProduction> allType = sumOfOffers.keySet();
         EnumMap<TypeProduction, Double> allRatio = new EnumMap<>(TypeProduction.class);
         for (TypeProduction type : allType) {
-            double ratio = allWeightOfMarket.div(sumOfOffers.get(type));
+            double ratio = sumOfOffers.get(type).div(allWeightOfMarket);
             allRatio.put(type, ratio);
         }
         for(TypeProduction type : allType)

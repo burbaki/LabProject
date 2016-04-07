@@ -26,7 +26,7 @@ public class OffersManager {
 
     public void addOffer(ProductPack pack, int IDTraderBuyer) {
         financialOperationController.pickUpProductionFromTrader(pack);
-        Offer newOffer = new Offer(pack, IDTraderBuyer, price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight().toDouble());
+        Offer newOffer = new Offer(pack, IDTraderBuyer, price.getPriceForOneTonn(pack.getTypeProduction()).multi(pack.getWeight().toDouble()));
         listOfOffer.add(newOffer);
     }
 
