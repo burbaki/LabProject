@@ -12,7 +12,7 @@ public class OffersManager {
 
     OffersManager(FinancialOperationController financialOperationController) {
         this.financialOperationController = financialOperationController;
-        price = new PriceList(dayChanger,listOfOffer );
+        price = new PriceList(dayChanger, listOfOffer);
 
     }
 
@@ -26,7 +26,7 @@ public class OffersManager {
 
     public void addOffer(ProductPack pack, int IDTraderBuyer) {
         financialOperationController.pickUpProductionFromTrader(pack);
-        Offer newOffer = new Offer(pack, IDTraderBuyer, price.getPriceForOneTonn(pack.getTypeProduction()).multi(pack.getWeight().toDouble()));
+        Offer newOffer = new Offer(pack, IDTraderBuyer, price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight());
         listOfOffer.add(newOffer);
     }
 

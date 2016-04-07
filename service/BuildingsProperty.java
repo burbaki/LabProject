@@ -5,7 +5,8 @@
  */
 package service;
 
-import boxClasses.Money;
+
+import enumerationClasses.Level;
 import enumerationClasses.TypeBuilding;
 
 /**
@@ -16,9 +17,13 @@ public class BuildingsProperty {
     
    //Разаработать методы и классы для управления XML документами
     
-    public static Money getCostOfBuilding(TypeBuilding type)
+    public static double getCostOfBuilding(TypeBuilding type)
     {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public static double getLvlUpCost(Level level) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

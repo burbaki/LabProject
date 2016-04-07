@@ -2,6 +2,7 @@ package building;
 
 import enumerationClasses.Level;
 import enumerationClasses.TypeInstrument;
+import service.InstrumentProperty;
 
 public class InstrumentCharacteristics {
 

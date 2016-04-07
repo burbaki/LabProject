@@ -1,19 +1,19 @@
 package market;
 
-import boxClasses.Weight;
+
 import enumerationClasses.TypeProduction;
 
 public class ProductPack {
 
-    private final Weight weight;
+    private final Double weight;
     private final TypeProduction type;
 
-    public ProductPack(Weight wgh, TypeProduction type) {
+    public ProductPack(double wgh, TypeProduction type) {
         weight = wgh;
         this.type = type;
     }
 
-    public Weight getWeight() {
+    public Double getWeight() {
         return weight;
     }
 

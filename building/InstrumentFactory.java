@@ -1,7 +1,8 @@
 package building;
 
 
-import boxClasses.Weight;
+
+import enumerationClasses.TypeBuilding;
 import java.util.List;
 
 import market.ProductPack;
@@ -12,8 +13,8 @@ public class InstrumentFactory extends Factory {
 	private Instrument[] readyInstruments;
 	private List<ProductPack> requiredProduction;
 
-    public InstrumentFactory(int TypeProduction) {
-        super(TypeProduction);
+    public InstrumentFactory(TypeBuilding type) {
+        super(type);
     }
 
 	/**

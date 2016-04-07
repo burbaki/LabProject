@@ -1,24 +1,24 @@
+
 package market;
 
-import boxClasses.Money;
-import boxClasses.Weight;
+
 import enumerationClasses.TypeProduction;
 
 public class Offer extends ProductPack {
 
     static int countOfOffers = 0;
     int idOffer;
-    private Money value;
+    private double value;
     private final int seller;
     private int buyer;
 
-    public Offer(Weight weight, TypeProduction type, int idSeller) {
+    public Offer(double weight, TypeProduction type, int idSeller) {
         super(weight, type);
         this.seller = idSeller;
         idOffer = countOfOffers++;
     }
 
-    public Offer(ProductPack pack, int idSeller, Money value) {
+    public Offer(ProductPack pack, int idSeller, double value) {
         super(pack.getWeight(), pack.getTypeProduction());
         this.seller = idSeller;
         this.value = value;
@@ -29,7 +29,7 @@ public class Offer extends ProductPack {
         buyer = idBuyer;
     }
 
-    public void setPrice(Money value) {
+    public void setPrice(double value) {
         this.value = value;
     }
 

@@ -1,11 +1,10 @@
 package market;
 
-import boxClasses.Money;
 import building.Stock;
 
 public class Trader {
 
-    private Money moneyBalance;
+    private double moneyBalance;
     private Stock stock;
     private int IDTrader;
 

@@ -1,14 +1,14 @@
 package building;
 
-import boxClasses.Money;
+
 import market.Offer;
 import market.Trader;
 
 public class FinanceManager {
 
-	private Money moneyBalance;
-	private Money salaryPerDay;
-	private Money Cost;
+	private double moneyBalance;
+	private double salaryPerDay;
+	private double Cost;
 	private Trader buildingTrader;
 
 	/**
@@ -29,5 +29,9 @@ public class FinanceManager {
 		// TODO - implement FinanceManager.createOffer
 		throw new UnsupportedOperationException();
 	}
+
+    double getMoneyBalance() {
+        return moneyBalance;
+    }
 
 }

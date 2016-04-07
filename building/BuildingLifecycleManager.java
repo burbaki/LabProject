@@ -1,7 +1,7 @@
 package building;
 
-import enumerationClasses.Level;
 import enumerationClasses.TypeBuilding;
+import service.BuildingsProperty;
 
 
 
@@ -19,12 +19,11 @@ public class BuildingLifecycleManager {
     }
 
     public void upgrade() {
-        if (building.getCash().compare(BuildingProperty.getLvlUpCost(building.getLevel())) > 1);
+       
     }
 
     public boolean availableToUpgradable() {
-        // TODO - implement BuildingLIfecycleManager.availableToUpgradable
-        throw new UnsupportedOperationException();
+        return building.getMoneyBalance() > BuildingsProperty.getLvlUpCost(building.getLevel());
     }
 
     public void destroyBuilding() {
@@ -33,7 +32,7 @@ public class BuildingLifecycleManager {
 
     public String getlvl()
     {
-        return building.getLevel();
+        return building.getLevel().toString();
     }
      
     public String getType()

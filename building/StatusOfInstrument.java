@@ -5,6 +5,7 @@ import country.DayChanger;
 import enumerationClasses.TypeInstrument;
 import java.util.Observable;
 import java.util.Observer;
+import service.InstrumentProperty;
 
 public class StatusOfInstrument implements Observer {
 
@@ -39,7 +40,7 @@ public class StatusOfInstrument implements Observer {
 
     private void createLifeBar() {
         lifeBar = new LifeBar(dayChanger);
-        lifeBar.setHealth(IstrumentProperty.getHealth(this.type));
+        lifeBar.setHealth(InstrumentProperty.getHealth(this.type));
     }
 
     public void finishCreate() {

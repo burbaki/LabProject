@@ -1,18 +1,18 @@
 package building;
 
-import boxClasses.Weight;
+
 import enumerationClasses.TypeProduction;
 import java.util.EnumMap;
 
 public class Stock {
 
-	private EnumMap<TypeProduction, Weight> AmountOfProductions;
+	private EnumMap<TypeProduction, Double> AmountOfProductions;
 
 	/**
 	 * 
 	 * @param TypeProduction
 	 */
-	public Weight GetAmountOfProduct(int TypeProduction) {
+	public double GetAmountOfProduct(TypeProduction type ) {
 		// TODO - implement Stock.GetAmountOfProduct
 		throw new UnsupportedOperationException();
 	}

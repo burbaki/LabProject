@@ -1,7 +1,5 @@
 package market;
 
-import boxClasses.Money;
-import boxClasses.Weight;
 import country.DayChanger;
 import enumerationClasses.TypeProduction;
 import java.util.EnumMap;
@@ -15,7 +13,7 @@ import service.ResourseProperties;
 public class PriceList implements Observer {
 
     private int dayFromBegin;
-    private EnumMap<TypeProduction, Money> priesList;
+    private EnumMap<TypeProduction, Double> priesList;
     private DayChanger dayChanger;
     private List<Offer> Offers;
 
@@ -27,36 +25,35 @@ public class PriceList implements Observer {
         updatePrice();
     }
 
-    public Money getPriceForOneTonn(TypeProduction type) {
+    public Double getPriceForOneTonn(TypeProduction type) {
         return priesList.get(type);
     }
 // разбить на несколько методов
 
     private void updatePrice() {
-        EnumMap<TypeProduction, Weight> sumOfOffers = new EnumMap<>(TypeProduction.class);
-        Weight allWeightOfMarket = new Weight();
+        EnumMap<TypeProduction, Double> sumOfOffers = new EnumMap<>(TypeProduction.class);
+        double allWeightOfMarket = 0;
         for (Offer o : Offers) {
             TypeProduction type = o.getTypeProduction();
-            Weight currentWeight = o.getWeight();
-            allWeightOfMarket.add(currentWeight);
-            currentWeight.add(sumOfOffers.get(type));
+            Double currentWeight = o.getWeight();
+            allWeightOfMarket = +currentWeight;
+            currentWeight += sumOfOffers.get(type);
             sumOfOffers.put(type, currentWeight);
         }
         Set<TypeProduction> allType = sumOfOffers.keySet();
         EnumMap<TypeProduction, Double> allRatio = new EnumMap<>(TypeProduction.class);
         for (TypeProduction type : allType) {
-            double ratio = sumOfOffers.get(type).div(allWeightOfMarket);
+            double ratio = sumOfOffers.get(type) / allWeightOfMarket;
             allRatio.put(type, ratio);
         }
-        for(TypeProduction type : allType)
-        {
-            Money newprice = ResourseProperties.getBasicValue(type).div(allRatio.get(type));            
-            priesList.put(type,newprice);
+        for (TypeProduction type : allType) {
+            double newprice = ResourseProperties.getBasicValue(type) / allRatio.get(type);
+            priesList.put(type, newprice);
         }
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        updatePrice();
     }
 }

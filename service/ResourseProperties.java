@@ -5,7 +5,6 @@
  */
 package service;
 
-import boxClasses.Money;
 import enumerationClasses.TypeProduction;
 
 /**
@@ -14,7 +13,7 @@ import enumerationClasses.TypeProduction;
  */
 public class ResourseProperties {
 
-    public static Money getBasicValue(TypeProduction type) {
+    public static double getBasicValue(TypeProduction type) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

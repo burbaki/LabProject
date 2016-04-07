@@ -1,6 +1,6 @@
 package country;
 
-import boxClasses.Money;
+
 import building.BuildingLifecycleManager;
 import enumerationClasses.TypeBuilding;
 import country.CountryController;
@@ -8,12 +8,13 @@ import java.util.List;
 import service.BuildingsProperty;
 
 public class BuildingContainer {
-    CountryController OwnCountry;
-    private Money CountryCash = new Money(0);
+    private CountryController OwnCountry;
+    private double countryCash;
     private List<BuildingLifecycleManager> listOfBuildings;
 
     public BuildingContainer(CountryController country) {
         OwnCountry = country;
+        countryCash = 0;
     }
 
     
@@ -25,14 +26,14 @@ public class BuildingContainer {
 
     }
 
-    public void setCountryBallance(Money money) {
-        CountryCash.setMoney(OwnCountry.getCashOfCountry());
+    public void setCountryBallance() {
+        countryCash = OwnCountry.getCashOfCountry();
         
     }
 
     public boolean availableToBuild(TypeBuilding type) {
-
-        return CountryCash.Compare(BuildingsProperty.getCostOfBuilding(type)) > 1;
+        setCountryBallance();
+        return countryCash > BuildingsProperty.getCostOfBuilding(type);
 
     }
 

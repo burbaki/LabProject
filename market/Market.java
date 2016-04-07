@@ -1,6 +1,6 @@
 package market;
 
-import boxClasses.*;
+
 import static country.CountryController.dayChanger;
 import enumerationClasses.TypeProduction;
 import java.util.EnumMap;
@@ -9,17 +9,17 @@ import java.util.List;
 public class Market {
 
     private FinancialOperationController financialOperationController;
-    private Money totalBalance;
+    private Double totalBalance;
     private TraderManager traderManager;
     private OffersManager offersManager;
 
     public Market() {
         financialOperationController = new FinancialOperationController(offersManager);
         traderManager = new TraderManager();
-        offersManager = new OffersManager(financialOperationController, dayChanger);
+        offersManager = new OffersManager(financialOperationController);
     }
 
-    public Money getTotalBalance() {
+    public double getTotalBalance() {
         return totalBalance;
     }
 

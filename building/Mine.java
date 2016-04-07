@@ -1,23 +1,22 @@
 package building;
 
-import boxClasses.Weight;
+import enumerationClasses.TypeBuilding;
 
 public class Mine extends ResourceBuilding {
 
-	private Weight amountOfDeposits;
+    private double amountOfDeposits;
 
-    public Mine(int TypeProduction) {
-        super(TypeProduction);
+    public Mine(TypeBuilding type) {
+        super(type);
     }
 
-	public Weight getAmountOfDeposit() {
-		// TODO - implement Mine.getAmountOfDeposit
-		throw new UnsupportedOperationException();
-	}
+    public double getAmountOfDeposit() {
+        return amountOfDeposits;
+    }
 
-	public void Harvest() {
-		// TODO - implement Mine.Harvest
-		throw new UnsupportedOperationException();
-	}
+    public void Harvest() {
+        // TODO - implement Mine.Harvest
+        throw new UnsupportedOperationException();
+    }
 
 }
