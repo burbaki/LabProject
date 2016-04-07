@@ -35,7 +35,7 @@ public class MarketTrader implements ITrader, Observer {
     }
 
     public void findApropriateOffer() {
-        int idOffer = traderUI.findApropriateOffer(listOfOffers, wallet.getMoney());
+        int idOffer = traderUI.findApropriateOffer(listOfOffers, wallet.getBalance());
         market.pickUpOffer(idOffer, IDTrader);
     }
 
@@ -65,5 +65,16 @@ public class MarketTrader implements ITrader, Observer {
     public void update(Observable o, Object arg) {
         makeDailyOperation();
     }
-
+    public double getBalance()
+    {
+        return wallet.getBalance();
+    }
+    public void takeMoney(double money)
+    {
+        wallet.takeMoney(money);
+    }
+    public void giveMoney(double money)
+    {
+        wallet.giveMoney(money);
+    }
 }

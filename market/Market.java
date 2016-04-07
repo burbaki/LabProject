@@ -14,7 +14,7 @@ public class Market {
     private OffersManager offersManager;
 
     public Market() {
-        financialOperationController = new FinancialOperationController(offersManager);
+        financialOperationController = new FinancialOperationController(traderManager);
         traderManager = new TraderManager( getListOfOffers(), this);
         offersManager = new OffersManager(financialOperationController, dayChanger);
     }

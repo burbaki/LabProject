@@ -28,7 +28,7 @@ public class TraderWallet implements IWallet {
     }
 
     @Override
-    public double getMoney() {
+    public double getBalance() {
         return moneyBalance;
 
     }

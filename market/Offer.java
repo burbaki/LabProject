@@ -44,5 +44,10 @@ public class Offer extends ProductPack {
     public int getIDBuyer() {
         return buyer;
     }
+    
+    public double getPriceOfPack()
+    {
+        return value;
+    }
 
 }

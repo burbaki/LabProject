@@ -32,7 +32,7 @@ public class OffersManager implements Observer {
     }
 
     public void addOffer(ProductPack pack, int IDTraderSeller) {
-        financialOperationController.pickUpProductionFromTrader(pack);
+        financialOperationController.pickUpProductionFromTrader(pack, IDTraderSeller );
         Offer newOffer = new Offer(pack, IDTraderSeller, price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight());
         listOfOffer.add(newOffer);
     }
@@ -40,7 +40,8 @@ public class OffersManager implements Observer {
     public void makeOffer(int IDOffer, int IDTraderBuyer) {
         for (Offer o : listOfOffer) {
             if (o.getID() == IDOffer) {
-                financialOperationController.giveMoneyToTrader(o.getIDBuyer());
+                financialOperationController.pickUpMoneyFromTrader(o.getPriceOfPack(), o.getIDSeller());
+                financialOperationController.giveMoneyToTrader( o.getPriceOfPack(), o.getIDBuyer());
                 financialOperationController.givePackToTrader(o, IDTraderBuyer);
                 listOfOffer.remove(o);
             }

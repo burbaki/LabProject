@@ -12,5 +12,5 @@ package market;
 public interface IWallet {
     public void takeMoney(double money);
     public void giveMoney(double money);
-    public double getMoney();
+    public double getBalance();
 }

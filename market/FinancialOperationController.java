@@ -5,30 +5,55 @@
  */
 package market;
 
+import java.util.List;
+
 /**
  *
  * @author Burbaki
  */
 public class FinancialOperationController {
 
-    FinancialOperationController(OffersManager offersManager) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    OffersManager offersManager;
+    TraderManager traderManager;
+    List<MarketTrader> list;
+
+    FinancialOperationController(TraderManager traderManager) {
+
+        this.traderManager = traderManager;
+        list = traderManager.getListOfTraders();
     }
 
-    public void giveMoneyToTrader(int ID) {
-
+    public void giveMoneyToTrader(double money, int IDTrader) {
+        for (MarketTrader t : list) {
+            if (t.getIDTrader() == IDTrader) {
+                t.takeMoney(money);
+            }
+        }
     }
 
-    public void givePackToTrader(ProductPack pack, int ID) {
-
+    public void givePackToTrader(ProductPack pack, int IDTrader) {
+        for (MarketTrader t : list) {
+            if (t.getIDTrader() == IDTrader) {
+                t.takeProductPack(pack);
+            }
+        }
     }
 
-    public void pickUpMoneyFromTrader(int IDTraderBuyer) {
-
+    public void pickUpMoneyFromTrader(double money, int IDTrader) {
+        for (MarketTrader t : list) {
+            if (t.getIDTrader() == IDTrader) {
+                t.giveMoney(money);
+            }
+        }
     }
 
-    public void pickUpProductionFromTrader(ProductPack pack) {
+    public void pickUpProductionFromTrader(ProductPack pack, int IDTrader) {
 
+        for (MarketTrader t : list) {
+            if (t.getIDTrader() == IDTrader) {
+                t.giveProductPack(pack);
+            }
+        }
     }
 
 }
