@@ -1,25 +1,39 @@
 package building;
 
-
 import enumerationClasses.TypeProduction;
 import java.util.EnumMap;
 
 public class Stock {
 
-	private EnumMap<TypeProduction, Double> AmountOfProductions;
+    private EnumMap<TypeProduction, Double> amountOfProductions;
 
-	/**
-	 * 
-	 * @param TypeProduction
-	 */
-	public double GetAmountOfProduct(TypeProduction type ) {
-		// TODO - implement Stock.GetAmountOfProduct
-		throw new UnsupportedOperationException();
-	}
+    public Stock() {
+        amountOfProductions = new EnumMap<>(TypeProduction.class);
+    }
 
-	public String toString() {
-		// TODO - implement Stock.toString
-		throw new UnsupportedOperationException();
-	}
+    //do not know whether it should be
+    public double GetAmountOfProduct(TypeProduction type) {
+        return amountOfProductions.get(type);
+    }
+
+    public void setAmountOfProduct(TypeProduction type, double weight) {
+
+    }
+
+    public String toString() {
+        return amountOfProductions.toString();
+    }
+
+    public void takeProduct(TypeProduction type, double weight) {
+        double wgh = amountOfProductions.get(type);
+        wgh += weight;
+        amountOfProductions.put(type, wgh);
+    }
+
+    public void giveProduct(TypeProduction type, double weight) {
+        double wgh = amountOfProductions.get(type);
+        wgh -= weight;
+        amountOfProductions.put(type, wgh);
+    }
 
 }

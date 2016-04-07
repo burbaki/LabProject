@@ -1,39 +1,55 @@
 package market;
 
+import static country.CountryController.dayChanger;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class TraderManager {
 
-	private Trader[] listOfTrader;
+    private List<MarketTrader> listOfTrader;
+    private List<Offer> listOfOffers;
+    private Market OwnMarket;
 
-	/**
-	 * 
-	 * @param Trader
-	 */
-	public void addTrader(int Trader) {
-		// TODO - implement TraderManager.addTrader
-		throw new UnsupportedOperationException();
-	}
+    TraderManager(List<Offer> listOfOffers, Market market) {
+        listOfTrader = new LinkedList<>();
+        this.listOfOffers = listOfOffers;
+        OwnMarket = market;
+    }
 
-	/**
-	 * 
-	 * @param Int
-	 */
-	public void removeTrader(int[] Int) {
-		// TODO - implement TraderManager.removeTrader
-		throw new UnsupportedOperationException();
-	}
+    public MarketTrader createMarketTrader() {
+        return new MarketTrader(dayChanger, listOfOffers, OwnMarket);
+    }
 
-	/**
-	 * 
-	 * @param Int
-	 */
-	public void checkTrader(int Int) {
-		// TODO - implement TraderManager.checkTrader
-		throw new UnsupportedOperationException();
-	}
+    public void addTrader(MarketTrader trader) {
+        if (trader != null) {
+            trader.receiveList(listOfOffers);
+        }
+    }
 
-	public int[] findBankrut() {
-		// TODO - implement TraderManager.findBankrut
-		throw new UnsupportedOperationException();
-	}
+    public void makeTraders(int quantity) {
+        for(int i = 0; i < quantity; i++)
+        {
+            addTrader(createMarketTrader());            
+        }
+            
+    }
+
+    public void removeTrader(int IDTrader) {
+        for(MarketTrader t : listOfTrader)
+        {
+            if(t.getIDTrader() == IDTrader)
+                listOfOffers.remove(t);
+        }
+    }
+
+    // this function checked money balance of trader and if he have few maoney return true
+    public void IsTraderBankrut(int IDTrader) {
+        
+    }
+
+    public int[] findBankrut() {
+        
+    }
 
 }

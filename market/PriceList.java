@@ -5,12 +5,11 @@ import enumerationClasses.TypeProduction;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+
 import java.util.Set;
 import service.ResourseProperties;
 
-public class PriceList implements Observer {
+public class PriceList {
 
     private int dayFromBegin;
     private EnumMap<TypeProduction, Double> priesList;
@@ -18,8 +17,7 @@ public class PriceList implements Observer {
     private List<Offer> Offers;
 
     public PriceList(DayChanger dayChanger, List<Offer> Offers) {
-        this.dayChanger = dayChanger;
-        dayChanger.addObserver(this);
+        
         dayFromBegin = 0;
         priesList = new EnumMap<>(TypeProduction.class);
         updatePrice();
@@ -30,7 +28,7 @@ public class PriceList implements Observer {
     }
 // разбить на несколько методов
 
-    private void updatePrice() {
+    public void updatePrice() {
         EnumMap<TypeProduction, Double> sumOfOffers = new EnumMap<>(TypeProduction.class);
         double allWeightOfMarket = 0;
         for (Offer o : Offers) {
@@ -52,8 +50,5 @@ public class PriceList implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        updatePrice();
-    }
+   
 }

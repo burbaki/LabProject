@@ -15,8 +15,8 @@ public class Market {
 
     public Market() {
         financialOperationController = new FinancialOperationController(offersManager);
-        traderManager = new TraderManager();
-        offersManager = new OffersManager(financialOperationController);
+        traderManager = new TraderManager( getListOfOffers(), this);
+        offersManager = new OffersManager(financialOperationController, dayChanger);
     }
 
     public double getTotalBalance() {
@@ -26,23 +26,19 @@ public class Market {
     public List<Offer> getListOfOffers() {
         return offersManager.getListOfOffer();
     }
-
-    public void makeDailyOperation() {
-        // TODO - implement Market.makeDailyOperation
-        throw new UnsupportedOperationException();
+   
+    public void makeDailyOperation() 
+    {
+        
     }
 
-    /**
-     *
-     * @param ProductPack
-     */
+
     public void applay(ProductPack pack, int IDTraderSeller) {
         offersManager.addOffer(pack, IDTraderSeller);
     }
 
-    public void pickUpOffer(int IDOffer) {
-        // TODO - implement Market.pickUpOffer
-        throw new UnsupportedOperationException();
+    public void pickUpOffer(int IDOffer, int IDTraderBuyer ) {
+        offersManager.makeOffer(IDOffer, IDTraderBuyer);
     }
 
 }
