@@ -3,10 +3,12 @@ package enumerationClasses;
 public enum TypeProduction {
     COIL,
     WOOD,
-    OIL,    
-    IRON,
-    COOPER,
+    IRONORE,
+    WATER,
+    COOPERORE,
     SILICON,
+    COOPER,
     STEEL,
     BOARDS,
+    UNDEFINED,
 }

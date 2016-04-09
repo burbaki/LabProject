@@ -10,7 +10,7 @@ import java.util.Observer;
 public class MarketTrader implements ITrader, Observer {
 
     private IWallet wallet;
-
+    private static int count = 0;
     private Stock stock;
     private int IDTrader;
     DayChanger dayChanger;
@@ -24,6 +24,7 @@ public class MarketTrader implements ITrader, Observer {
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();
         this.market = market;
+        IDTrader = count++;
     }
 
     public void receiveList(List<Offer> list) {
@@ -49,7 +50,16 @@ public class MarketTrader implements ITrader, Observer {
         findApropriateOffer();
     }
 
-    public void takeProductPack(ProductPack pack) {
+    
+
+    public void update(Observable o, Object arg) {
+        makeDailyOperation();
+    }
+    public double getBalance()
+    {
+        return wallet.getBalance();
+        
+    }public void takeProductPack(ProductPack pack) {
         TypeProduction type = pack.getTypeProduction();
         double weight = pack.getWeight();
         stock.takeProduct(type, weight);
@@ -60,14 +70,6 @@ public class MarketTrader implements ITrader, Observer {
         TypeProduction type = pack.getTypeProduction();
         double weight = pack.getWeight();
         stock.giveProduct(type, weight);
-    }
-
-    public void update(Observable o, Object arg) {
-        makeDailyOperation();
-    }
-    public double getBalance()
-    {
-        return wallet.getBalance();
     }
     public void takeMoney(double money)
     {

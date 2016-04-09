@@ -5,9 +5,13 @@
  */
 package market;
 
-
 public interface ITrader {
+
     public void takeProductPack(ProductPack pack);
 
-    public void giveProductPack(ProductPack pack);    
+    public void giveProductPack(ProductPack pack);
+
+    public void takeMoney(double money);
+
+    public void giveMoney(double money);
 }

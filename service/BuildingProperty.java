@@ -13,7 +13,7 @@ import enumerationClasses.TypeBuilding;
  *
  * @author Burbaki
  */
-public class BuildingsProperty {
+public class BuildingProperty {
     
    //Разаработать методы и классы для управления XML документами
     
@@ -22,7 +22,15 @@ public class BuildingsProperty {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public static double getLvlUpCost(Level level) {
+    public static double getLvlUpCost(int level) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static double getBasicProductionPowerPerDay(TypeBuilding type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static double getAmountOfDeposit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

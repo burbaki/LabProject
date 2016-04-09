@@ -5,7 +5,7 @@ import building.BuildingLifecycleManager;
 import enumerationClasses.TypeBuilding;
 import country.CountryController;
 import java.util.List;
-import service.BuildingsProperty;
+import service.BuildingProperty;
 
 public class BuildingContainer {
     private CountryController OwnCountry;
@@ -33,7 +33,7 @@ public class BuildingContainer {
 
     public boolean availableToBuild(TypeBuilding type) {
         setCountryBallance();
-        return countryCash > BuildingsProperty.getCostOfBuilding(type);
+        return countryCash > BuildingProperty.getCostOfBuilding(type);
 
     }
 

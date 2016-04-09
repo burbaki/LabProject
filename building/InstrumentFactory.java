@@ -2,6 +2,7 @@ package building;
 
 
 
+import country.DayChanger;
 import enumerationClasses.TypeBuilding;
 import java.util.List;
 
@@ -15,6 +16,10 @@ public class InstrumentFactory extends Factory {
 
     public InstrumentFactory(TypeBuilding type) {
         super(type);
+    }
+
+    InstrumentFactory(TypeBuilding type, DayChanger dayChanger) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 	/**

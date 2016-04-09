@@ -1,46 +1,65 @@
 package building;
 
-
+import country.DayChanger;
 import enumerationClasses.Level;
 import enumerationClasses.TypeBuilding;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import service.BuildingProperty;
 
-public class ResourceBuilding {
+public abstract class ResourceBuilding implements Observer{
 
     private static int count = 0;
-    private Stock stock;
-    private List<Instrument> instruments = new LinkedList<>();
-    private TypeBuilding outputProduction;
+    protected Stock stock;
+    private List<Instrument> instruments;
     private double BasicProductionPowerPerDay;
     private int idBuilding;
+    protected double currentProductionPerDay;
     private FinanceManager financeManager;
-    private Level lvl;
+    private int lvl;
+    private final DayChanger dayChanger;
+
+    public ResourceBuilding( DayChanger dayChanger)  {
+        this.dayChanger = dayChanger;
+        dayChanger.addObserver(this);
+        BasicProductionPowerPerDay = BuildingProperty.getBasicProductionPowerPerDay(type);
+        
+        financeManager = new FinanceManager();
+        stock = new Stock();
+        lvl = 1;
+        instruments = new LinkedList<>();
+        idBuilding = count++;
+
+    }
 
     public int getIdBuilding() {
         return this.idBuilding;
     }
 
-    public ResourceBuilding(TypeBuilding type) {
-        
-    }
-
     public void makeProduction() {
-        // TODO - implement ResourceBuilding.makeProduction
-        throw new UnsupportedOperationException();
+        stock.takeProduct(currentProductionPerDay);
     }
 
     public void deployInstrument(Instrument instrument) {
-        // TODO - implement ResourceBuilding.deployInstrument
-        throw new UnsupportedOperationException();
+        instruments.add(instrument);
     }
 
     public double getMoneyBalance() {
 
-       return financeManager.getMoneyBalance();
+        return financeManager.getMoneyBalance();
     }
-    public Level getLevel()
-    {
+
+    public int getLevel() {
         return lvl;
+    }
+
+    void upgrade() {
+        lvl++;
+    }
+    
+     public void update(Observable o, Object arg) {
+        makeProduction();
     }
 }

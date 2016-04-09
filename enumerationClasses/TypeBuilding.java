@@ -5,7 +5,6 @@
  */
 package enumerationClasses;
 
-
 public enum TypeBuilding {
     DRILL,
     COMBAIN,
@@ -16,10 +15,13 @@ public enum TypeBuilding {
     MICROSCEMES,
     COIL,
     WOOD,
-    OIL,    
-    IRON,
-    COOPER,
+    IRONORE,
+    WATER,
+    COOPERORE,
     SILICON,
+    COOPER,
     STEEL,
-    BOARDS
+    BOARDS,
+    UNDEFINED,
+
 }
