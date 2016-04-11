@@ -2,7 +2,6 @@ package building;
 
 import static country.CountryController.dayChanger;
 import enumerationClasses.TypeBuilding;
-import enumerationClasses.TypeProduction;
 import service.BuildingProperty;
 
 public class BuildingLifecycleManager {
@@ -10,8 +9,9 @@ public class BuildingLifecycleManager {
     private ResourceBuilding building;
 
     public BuildingLifecycleManager(TypeBuilding type) {
-        if (createBuilding(type). != TypeProduction.UNDEFINED);
-        this.building = createBuilding(type);
+        if (createBuilding(type) != null) {
+            this.building = createBuilding(type);
+        }
     }
 
     public void deployInstrument(Instrument instrument) {
@@ -34,10 +34,15 @@ public class BuildingLifecycleManager {
         return building.getLevel() + " level";
     }
 
+    public boolean readyForDestroy() {
+        return building.readyForDestroy();
+    }
+
     public String getType() {
         return building.toString();
     }
 //issues space, need rework
+
     private ResourceBuilding createBuilding(TypeBuilding type) {
         if ((((((type == TypeBuilding.DRILL
                 || type == TypeBuilding.COMBAIN)
@@ -46,7 +51,7 @@ public class BuildingLifecycleManager {
                 || type == TypeBuilding.PUMP)
                 || type == TypeBuilding.EQUIPMENT)
                 || type == TypeBuilding.MICROSCEMES) {
-            return new InstrumentFactory(type, dayChanger );
+            return new InstrumentFactory(type, dayChanger);
         } else if (type == TypeBuilding.COIL
                 || type == TypeBuilding.WOOD
                 || type == TypeBuilding.IRONORE
@@ -60,7 +65,7 @@ public class BuildingLifecycleManager {
                 || type == TypeBuilding.BOARDS) {
             return new Factory(type, dayChanger);
         }
-        return ;
+        return null;
     }
 
 }

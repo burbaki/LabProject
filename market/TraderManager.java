@@ -10,21 +10,25 @@ public class TraderManager {
     private List<MarketTrader> listOfTrader;
     private List<Offer> listOfOffers;
     private Market OwnMarket;
+    private static int count;
 
     TraderManager(List<Offer> listOfOffers, Market market) {
         listOfTrader = new LinkedList<>();
         this.listOfOffers = listOfOffers;
         OwnMarket = market;
+        count = 0;
     }
 
     public MarketTrader createMarketTrader() {
-        return new MarketTrader(dayChanger, listOfOffers, OwnMarket);
+        return new MarketTrader(dayChanger);
     }
 //add anyone trader
 
-    public void addTrader(MarketTrader trader) {
+    public void addTrader(ITrader trader) {
         if (trader != null) {
             trader.receiveList(listOfOffers);
+            trader.setID(count++);
+            trader.setMarket(OwnMarket);
         }
     }
 // creating and ading traders

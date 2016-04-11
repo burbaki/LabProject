@@ -1,20 +1,33 @@
 package building;
 
 import country.DayChanger;
+import enumerationClasses.EnumConverter;
 import enumerationClasses.TypeBuilding;
 import enumerationClasses.TypeProduction;
-
+import java.util.List;
+import service.ResourceProperties;
 
 public class Factory extends ResourceBuilding {
 
-	private TypeProduction[] requiredProduction;
-//конструктор 
-
-    public Factory(TypeBuilding type) {
-        super(type);
-    }
+    private List<TypeProduction> requiredProduction;
+    private TypeProduction typeProduction;
+    FactoryFinanceManger financeManger;
 
     Factory(TypeBuilding type, DayChanger dayChanger) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super(type, dayChanger);
+        this.typeProduction = EnumConverter.BuildingsToProduction(type);
+        requiredProduction = ResourceProperties.getRequiredProduction(typeProduction);
+        financeManger = new FactoryFinanceManger(stock, typeProduction);
+    }
+
+    public void makeProduction() {
+        for (TypeProduction t : requiredProduction) {
+            if (stock.GetAmountOfProduct(t) > 1) {
+                stock.giveProduct(t, 1);
+            } else {
+                return;
+            }
+        }
+        stock.takeProduct(typeProduction, currentProductionPerDay);
     }
 }

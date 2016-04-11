@@ -6,6 +6,9 @@
 package service;
 
 import enumerationClasses.TypeInstrument;
+import java.util.List;
+import java.util.Map;
+import market.ProductPack;
 
 /**
  *
@@ -24,5 +27,9 @@ public class InstrumentProperty {
     public static double getproductionInfluence(TypeInstrument type) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public static Map<Integer, List<ProductPack>> getRequiredProduction(TypeInstrument typeInstrument) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

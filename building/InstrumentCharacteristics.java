@@ -7,16 +7,17 @@ import service.InstrumentProperty;
 public class InstrumentCharacteristics {
 
     private TypeInstrument typeInstrument;
-    private Level level;
+    private int level;
     private double productionInfluence;
 
-    public InstrumentCharacteristics(TypeInstrument type, Level lvl) {
+    public InstrumentCharacteristics(TypeInstrument type, int lvl) {
         typeInstrument = type;
+        assert(lvl <=5);
         level = lvl;
         productionInfluence = InstrumentProperty.getproductionInfluence(type);
     }
 
-    public Level getLevel()
+    public int getLevel()
     {
         return level;
     }

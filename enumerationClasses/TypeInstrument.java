@@ -17,5 +17,5 @@ public enum TypeInstrument {
     PUMP,
     EQUIPMENT,
     MICROSCEMES,
-    UNDEFINED,
+
 }

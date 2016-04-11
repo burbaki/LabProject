@@ -17,6 +17,9 @@ public class TraderWallet implements IWallet {
         moneyBalance = 100;
     }
 
+    public TraderWallet(double moneyBalance) {
+        this.moneyBalance = moneyBalance;
+    }
     @Override
     public void takeMoney(double money) {
         moneyBalance += money;

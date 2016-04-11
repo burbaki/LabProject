@@ -8,7 +8,7 @@ public class Instrument {
     private StatusOfInstrument status;
     private InstrumentCharacteristics instrumentCharacteristics;
 
-    public Instrument(TypeInstrument type, Level lvl) {
+    public Instrument(TypeInstrument type, int lvl) {
         instrumentCharacteristics = new InstrumentCharacteristics(type, lvl);
         status = new StatusOfInstrument(type, dayChanger);
     }
@@ -19,6 +19,10 @@ public class Instrument {
     }
     public String GetStatus() {
         return status.getStatus();
+    }
+
+     public int getLvl() {
+       return instrumentCharacteristics.getLevel();
     }
 
 }

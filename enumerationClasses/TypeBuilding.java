@@ -22,6 +22,4 @@ public enum TypeBuilding {
     COOPER,
     STEEL,
     BOARDS,
-    UNDEFINED,
-
 }

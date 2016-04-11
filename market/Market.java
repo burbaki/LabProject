@@ -10,7 +10,7 @@ public class Market {
 
     private FinancialOperationController financialOperationController;
     private Double totalBalance;
-    private TraderManager traderManager;
+    public static TraderManager traderManager;
     private OffersManager offersManager;
 
     public Market() {
@@ -31,7 +31,6 @@ public class Market {
     {
         
     }
-
 
     public void applay(ProductPack pack, int IDTraderSeller) {
         offersManager.addOffer(pack, IDTraderSeller);

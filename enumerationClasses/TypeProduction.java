@@ -10,5 +10,4 @@ public enum TypeProduction {
     COOPER,
     STEEL,
     BOARDS,
-    UNDEFINED,
 }

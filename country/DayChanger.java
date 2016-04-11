@@ -21,10 +21,6 @@ public class DayChanger extends Observable {
         throw new UnsupportedOperationException();
     }
 
-    /*public void interrupt() {
-		// TODO - implement DayChanger.interrupt
-		throw new UnsupportedOperationException();
-	}*/
     public void runOneDay() {
         try {
             Thread.sleep(1000);
@@ -37,7 +33,6 @@ public class DayChanger extends Observable {
     public long getCounterOfDays() {
         return counterOfDays;
     }
-
    
      public void notifyObservers()
     {

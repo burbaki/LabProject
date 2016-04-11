@@ -10,22 +10,30 @@ import java.util.Observer;
 public class MarketTrader implements ITrader, Observer {
 
     private IWallet wallet;
-    private static int count = 0;
     private Stock stock;
     private int IDTrader;
-    DayChanger dayChanger;
+    private DayChanger dayChanger;
     private ITraderUI traderUI;
-    List<Offer> listOfOffers;
-    Market market;
+    private List<Offer> listOfOffers;
+    private Market market;
 
-    public MarketTrader(DayChanger dayChanger, List<Offer> list, Market market) {
+    public MarketTrader(DayChanger dayChanger) {
         this.dayChanger = dayChanger;
         dayChanger.addObserver(this);
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();
-        this.market = market;
-        IDTrader = count++;
+       
+
     }
+
+    public void setID(int ID) {
+        IDTrader = ID;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
+    }
+    
 
     public void receiveList(List<Offer> list) {
         listOfOffers = list;
@@ -50,16 +58,16 @@ public class MarketTrader implements ITrader, Observer {
         findApropriateOffer();
     }
 
-    
-
     public void update(Observable o, Object arg) {
         makeDailyOperation();
     }
-    public double getBalance()
-    {
+
+    public double getBalance() {
         return wallet.getBalance();
-        
-    }public void takeProductPack(ProductPack pack) {
+
+    }
+
+    public void takeProductPack(ProductPack pack) {
         TypeProduction type = pack.getTypeProduction();
         double weight = pack.getWeight();
         stock.takeProduct(type, weight);
@@ -71,12 +79,12 @@ public class MarketTrader implements ITrader, Observer {
         double weight = pack.getWeight();
         stock.giveProduct(type, weight);
     }
-    public void takeMoney(double money)
-    {
+
+    public void takeMoney(double money) {
         wallet.takeMoney(money);
     }
-    public void giveMoney(double money)
-    {
+
+    public void giveMoney(double money) {
         wallet.giveMoney(money);
     }
 }

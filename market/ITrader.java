@@ -5,13 +5,23 @@
  */
 package market;
 
+import java.util.List;
+
 public interface ITrader {
 
     public void takeProductPack(ProductPack pack);
 
     public void giveProductPack(ProductPack pack);
 
-    public void takeMoney(double money);
+    public void takeMoney(double money);   
 
     public void giveMoney(double money);
+
+    public void receiveList(List<Offer> listOfOffers);
+
+    public void setID(int i);
+
+    public void makeDailyOperation();
+
+    public void setMarket(Market market);
 }

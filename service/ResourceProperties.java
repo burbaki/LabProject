@@ -6,14 +6,19 @@
 package service;
 
 import enumerationClasses.TypeProduction;
+import java.util.List;
 
 /**
  *
  * @author Burbaki
  */
-public class ResourseProperties {
+public class ResourceProperties {
 
     public static double getBasicValue(TypeProduction type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static List<TypeProduction> getRequiredProduction(TypeProduction typeProduction) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

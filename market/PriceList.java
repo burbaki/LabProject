@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import java.util.Set;
-import service.ResourseProperties;
+import service.ResourceProperties;
 
 public class PriceList {
 
@@ -45,7 +45,7 @@ public class PriceList {
             allRatio.put(type, ratio);
         }
         for (TypeProduction type : allType) {
-            double newprice = ResourseProperties.getBasicValue(type) / allRatio.get(type);
+            double newprice = ResourceProperties.getBasicValue(type) / allRatio.get(type);
             priesList.put(type, newprice);
         }
     }

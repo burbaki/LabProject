@@ -2,16 +2,13 @@ package building;
 
 
 import building.FinanceManager;
+import enumerationClasses.TypeProduction;
 
 public class FactoryFinanceManger extends FinanceManager {
 
-	/**
-	 * 
-	 * @param ProductPack
-	 */
-	public void uploadProduction(int ProductPack) {
-		// TODO - implement FactoryFinanceManger.uploadProduction
-		throw new UnsupportedOperationException();
-	}
+    public FactoryFinanceManger(Stock stock, TypeProduction type) {
+        super(stock, type);
+    }
+
 
 }
