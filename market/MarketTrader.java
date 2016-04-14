@@ -13,16 +13,17 @@ public class MarketTrader implements ITrader, Observer {
     private Stock stock;
     private int IDTrader;
     private DayChanger dayChanger;
-    private ITraderUI traderUI;
+    private IMarketTraderUI traderUI;
     private List<Offer> listOfOffers;
     private Market market;
-
-    public MarketTrader(DayChanger dayChanger) {
+    private boolean isBankrut;
+    public MarketTrader(DayChanger dayChanger, Market market) {
         this.dayChanger = dayChanger;
         dayChanger.addObserver(this);
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();
-       
+        this.market = market;
+        market.registerTrader(this);      
 
     }
 
@@ -44,7 +45,7 @@ public class MarketTrader implements ITrader, Observer {
     }
 
     public void findApropriateOffer() {
-        int idOffer = traderUI.findApropriateOffer(listOfOffers, wallet.getBalance());
+        int idOffer = traderUI.findApropriateOffer(listOfOffers, wallet.getMoneyBalance());
         market.pickUpOffer(idOffer, IDTrader);
     }
 
@@ -62,8 +63,8 @@ public class MarketTrader implements ITrader, Observer {
         makeDailyOperation();
     }
 
-    public double getBalance() {
-        return wallet.getBalance();
+    public double getMoneyBalance() {
+        return wallet.getMoneyBalance();
 
     }
 
@@ -71,7 +72,6 @@ public class MarketTrader implements ITrader, Observer {
         TypeProduction type = pack.getTypeProduction();
         double weight = pack.getWeight();
         stock.takeProduct(type, weight);
-
     }
 
     public void giveProductPack(ProductPack pack) {
@@ -86,5 +86,17 @@ public class MarketTrader implements ITrader, Observer {
 
     public void giveMoney(double money) {
         wallet.giveMoney(money);
+        if(wallet.getMoneyBalance() <10)
+            setBankrut();
+    }
+
+    @Override
+    public void setBankrut() {
+        isBankrut = true;
+    }
+
+    @Override
+    public boolean isTraderBankrut() {
+        return isBankrut;
     }
 }

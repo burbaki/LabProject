@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package market;
+package country;
 
 /**
  *
  * @author Burbaki
  */
-public interface IWallet {
-    public void takeMoney(double money);
-    public void giveMoney(double money);
-    public double getMoneyBalance();
+public class InstrumentDistributer {
+    
 }

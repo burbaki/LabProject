@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Burbaki
  */
-public interface ITraderUI {
+public interface IMarketTraderUI {
 
     
 

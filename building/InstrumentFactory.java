@@ -1,6 +1,7 @@
 package building;
 
 import country.DayChanger;
+import country.SingletonMarket;
 import enumerationClasses.EnumConverter;
 import enumerationClasses.TypeBuilding;
 import enumerationClasses.TypeInstrument;
@@ -14,7 +15,7 @@ import market.IWallet;
 import market.ProductPack;
 import service.InstrumentProperty;
 
-public class InstrumentFactory extends Factory implements IWallet{
+public class InstrumentFactory extends Factory implements IWallet {
 
     private TypeInstrument typeInstrument;
     private List<Instrument> readyInstruments;
@@ -26,6 +27,7 @@ public class InstrumentFactory extends Factory implements IWallet{
         this.typeInstrument = EnumConverter.BuildingsToInstrument(typeBuilding);
         requiredProduction = InstrumentProperty.getRequiredProduction(typeInstrument);
         readyInstruments = new LinkedList<>();
+        trader = new InstrumentTrader(stock, typeInstrument, requiredProduction, SingletonMarket.getInstance());
 
     }
 
@@ -41,7 +43,7 @@ public class InstrumentFactory extends Factory implements IWallet{
     private void transferReadyInstrument() {
         Pattern p = Pattern.compile("CREATE.+");
         for (Instrument i : inProductionInstruments) {
-            Matcher m = p.matcher(i.GetStatus());
+            Matcher m = p.matcher(i.getStatus());
             if (!m.matches()) {
                 readyInstruments.add(i);
                 inProductionInstruments.remove(i);
@@ -83,7 +85,7 @@ public class InstrumentFactory extends Factory implements IWallet{
 
     public Instrument giveInstrument(int minLvl) {
         if (!readyInstruments.isEmpty()) {
-            for ( int i =minLvl; minLvl >= 1; i--) {
+            for (int i = minLvl; minLvl >= 1; i--) {
                 for (Instrument ins : readyInstruments) {
                     if (ins.getLvl() >= i) {
                         readyInstruments.remove(ins);
@@ -102,11 +104,6 @@ public class InstrumentFactory extends Factory implements IWallet{
 
     @Override
     public void giveMoney(double money) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public double getBalance() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

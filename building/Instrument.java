@@ -17,7 +17,7 @@ public class Instrument {
     {
         return instrumentCharacteristics.getProductionInfluence();
     }
-    public String GetStatus() {
+    public String getStatus() {
         return status.getStatus();
     }
 

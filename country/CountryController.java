@@ -6,6 +6,7 @@ import market.Market;
 
 public class CountryController implements Observer {
 
+    private InstrumentDistributer instrumentDistributer;
     private Market market;
     private double cashOfCountry;
     public static DayChanger dayChanger;
@@ -15,7 +16,7 @@ public class CountryController implements Observer {
         this.dayChanger = new DayChanger();
         dayChanger.addObserver(this);
         cashOfCountry = 1000;
-        market = new Market();
+        market = SingletonMarket.getInstance();
         buildingContainer = new BuildingContainer(this);
     }
 

@@ -1,6 +1,7 @@
 package building;
 
 import country.DayChanger;
+import country.SingletonMarket;
 import enumerationClasses.EnumConverter;
 import enumerationClasses.TypeBuilding;
 import enumerationClasses.TypeProduction;
@@ -16,6 +17,7 @@ public class Mine extends ResourceBuilding {
         super(type, dayChanger);
         amountOfDeposits = BuildingProperty.getAmountOfDeposit();
         typeProduction = EnumConverter.BuildingsToProduction(type);
+        trader = new BuildingTrader(stock, typeProduction, SingletonMarket.getInstance());
     }
 
     public double getAmountOfDeposit() {
@@ -25,13 +27,17 @@ public class Mine extends ResourceBuilding {
     @Override
     public boolean readyForDestroy() {
         
-        return (super.readyForDestroy() || amountOfDeposits <= 0);
+        if(super.readyForDestroy() || amountOfDeposits <= 0)
+        {
+            trader.setBankrut();
+        }
+        return false;
     }
     
     @Override
     public void makeProduction() {
         amountOfDeposits -= currentProductionPerDay;
-        stock.takeProduct(EnumConverter.BuildingsToProduction(typeBuilding), currentProductionPerDay);
+        stock.takeProduct(typeProduction, currentProductionPerDay);
     }
 
 }

@@ -13,7 +13,7 @@ public interface ITrader {
 
     public void giveProductPack(ProductPack pack);
 
-    public void takeMoney(double money);   
+    public void takeMoney(double money);
 
     public void giveMoney(double money);
 
@@ -23,5 +23,9 @@ public interface ITrader {
 
     public void makeDailyOperation();
 
-    public void setMarket(Market market);
+    public double getMoneyBalance();
+
+    public void setBankrut();
+
+    public boolean isTraderBankrut();
 }

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Burbaki
  */
-public class SimpleMarketUI implements ITraderUI {
+public class SimpleMarketUI implements IMarketTraderUI {
 
     @Override
     public int findApropriateOffer(List<Offer> listOfOffers, double money) {

@@ -9,18 +9,18 @@ public class TraderManager {
 
     private List<MarketTrader> listOfTrader;
     private List<Offer> listOfOffers;
-    private Market OwnMarket;
+    private Market ownMarket;
     private static int count;
 
     TraderManager(List<Offer> listOfOffers, Market market) {
         listOfTrader = new LinkedList<>();
         this.listOfOffers = listOfOffers;
-        OwnMarket = market;
+        ownMarket = market;
         count = 0;
     }
 
     public MarketTrader createMarketTrader() {
-        return new MarketTrader(dayChanger);
+        return new MarketTrader(dayChanger, ownMarket);
     }
 //add anyone trader
 
@@ -28,7 +28,7 @@ public class TraderManager {
         if (trader != null) {
             trader.receiveList(listOfOffers);
             trader.setID(count++);
-            trader.setMarket(OwnMarket);
+            
         }
     }
 // creating and ading traders
@@ -47,16 +47,11 @@ public class TraderManager {
                 listOfOffers.remove(t);
             }
         }
-    }
-
-    // this function checked money balance of trader and if he have few maoney return true
-    public boolean IsTraderBankrut(MarketTrader trader) {
-        return (trader.getBalance() < 10);
-    }
+    }   
 
     public void findBankrut() {
         for (MarketTrader t : listOfTrader) {
-            if (IsTraderBankrut(t)) {
+            if (t.isTraderBankrut()) {
                 removeTrader(t.getIDTrader());
             }
         }

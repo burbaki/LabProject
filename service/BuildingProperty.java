@@ -33,5 +33,9 @@ public class BuildingProperty {
     public static double getAmountOfDeposit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public static double getSalary(TypeBuilding type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

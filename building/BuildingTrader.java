@@ -8,7 +8,6 @@ package building;
 import enumerationClasses.TypeProduction;
 import java.util.List;
 import market.ITrader;
-import market.ITraderUI;
 import market.IWallet;
 import market.Market;
 import market.Offer;
@@ -26,13 +25,16 @@ class BuildingTrader implements ITrader {
     protected int IDTrader;
     protected List<Offer> listOfOffers;
     private IWallet wallet;
-    private TypeProduction priorityProductForSale;
+    private TypeProduction ProductForSale;
     private final int PRIMARY_CASH = 1000;
+    private boolean isBankrut;
 
-    BuildingTrader(Stock stock, TypeProduction type) {
+    BuildingTrader(Stock stock, TypeProduction type, Market market) {
         this.stock = stock;
         wallet = new TraderWallet(PRIMARY_CASH);
-        priorityProductForSale = type;
+        ProductForSale = type;
+        this.market = market;
+        market.registerTrader(this);
 
     }
 
@@ -58,7 +60,7 @@ class BuildingTrader implements ITrader {
     }
 
     public double getMoneyBalance() {
-        return wallet.getBalance();
+        return wallet.getMoneyBalance();
     }
 
     @Override
@@ -73,23 +75,22 @@ class BuildingTrader implements ITrader {
 
     @Override
     public void makeDailyOperation() {
-        findApropriateOffer();
         market.applay(findProductionForSell(), IDTrader);
-
-    }
-
-    @Override
-    public void setMarket(Market market) {
-        this.market = market;
-    }
-
-    public void findApropriateOffer() {
-
     }
 
     public ProductPack findProductionForSell() {
-        double weightForSale = stock.GetAmountOfProduct(priorityProductForSale) / 3;
-        return  new ProductPack( weightForSale , priorityProductForSale);
+        double weightForSale = stock.GetAmountOfProduct(ProductForSale) / 3;
+        return  new ProductPack( weightForSale , ProductForSale);
+    }
+
+    @Override
+    public void setBankrut() {
+        isBankrut = true;
+    }
+
+    @Override
+    public boolean isTraderBankrut() {
+        return isBankrut;
     }
 
 }

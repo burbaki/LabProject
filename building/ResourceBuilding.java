@@ -1,26 +1,25 @@
 package building;
 
 import country.DayChanger;
-import enumerationClasses.EnumConverter;
-import enumerationClasses.Level;
 import enumerationClasses.TypeBuilding;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import market.ITrader;
 import service.BuildingProperty;
 
 public abstract class ResourceBuilding implements Observer {
 
+    private final double salaryPerDay;
     private static int count = 0;
     protected Stock stock;
     private List<Instrument> instruments;
     private double BasicProductionPowerPerDay;
     private int idBuilding;
     protected double currentProductionPerDay;
-    private FinanceManager financeManager;
     private int lvl;
+    protected ITrader trader;
     TypeBuilding typeBuilding;
     private DayChanger dayChanger;
 
@@ -29,15 +28,16 @@ public abstract class ResourceBuilding implements Observer {
         dayChanger.addObserver(this);
         BasicProductionPowerPerDay = BuildingProperty.getBasicProductionPowerPerDay(type);
         stock = new Stock();
-        financeManager = new FinanceManager(stock, EnumConverter.BuildingsToProduction(typeBuilding));
         lvl = 1;
         instruments = new LinkedList<>();
         idBuilding = count++;
+        salaryPerDay = BuildingProperty.getSalary(type);
     }
 
     public int getIdBuilding() {
         return this.idBuilding;
     }
+
 
     public void makeProduction() {
 
@@ -47,29 +47,49 @@ public abstract class ResourceBuilding implements Observer {
         instruments.add(instrument);
     }
 
-    public double getMoneyBalance() {
-
-        return financeManager.getMoneyBalance();
-    }
-
     public int getLevel() {
         return lvl;
     }
 
+    public double getMoneyBalance() {
+
+        return trader.getMoneyBalance();
+    }
+
     void upgrade() {
-        financeManager.giveMoney(BuildingProperty.getLvlUpCost(lvl));
+        trader.giveMoney(BuildingProperty.getLvlUpCost(lvl));
         lvl++;
     }
 
+    private double calculateCurrentProductionPerDay()
+    {double productionPower = BasicProductionPowerPerDay;
+        
+        for(Instrument i : instruments)
+        {
+            productionPower *= i.getProductionInfluence();
+        }
+        return productionPower;
+    }
+    private void checkInstrumentForDestroy()
+    {
+        for (Instrument i : instruments)
+        {
+        if("BROKEN".equals(i.getStatus()))
+            instruments.remove(i);
+        }        
+    }
     public void update(Observable o, Object arg) {
+        checkInstrumentForDestroy();
+        currentProductionPerDay = calculateCurrentProductionPerDay();
         makeProduction();
+        trader.giveMoney(salaryPerDay);
         // i dont use observer in financeManager class. because i dont sure that production
         // produse early that finance manager began his work.
-        financeManager.makeDailyOperation();
+        trader.makeDailyOperation();
         readyForDestroy();
     }
 
     boolean readyForDestroy() {
-        return financeManager.getMoneyBalance() <= 0;
+        return trader.getMoneyBalance() <= 0;
     }
 }
