@@ -16,9 +16,9 @@ public class DayChanger extends Observable {
         observers = new LinkedList<>();
     }
 
-    public void runDays(int Int) {
-        // TODO - implement DayChanger.runDays
-        throw new UnsupportedOperationException();
+    public void runDays(int day) {
+      for(int i = 1; i <=day; i++)
+          runOneDay();
     }
 
     public void runOneDay() {

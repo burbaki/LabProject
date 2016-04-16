@@ -2,6 +2,7 @@ package market;
 
 import static country.CountryController.dayChanger;
 
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,10 +13,10 @@ public class TraderManager {
     private Market ownMarket;
     private static int count;
 
-    TraderManager(List<Offer> listOfOffers, Market market) {
+    TraderManager(List<Offer> listOfOffers) {
+        ownMarket = Market.getInstance();
         listOfTrader = new LinkedList<>();
-        this.listOfOffers = listOfOffers;
-        ownMarket = market;
+        this.listOfOffers = listOfOffers;        
         count = 0;
     }
 

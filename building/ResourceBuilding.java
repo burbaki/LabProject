@@ -1,6 +1,7 @@
 package building;
 
 import country.DayChanger;
+import country.SingletonInstrumentDistributer;
 import enumerationClasses.TypeBuilding;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,12 +39,21 @@ public abstract class ResourceBuilding implements Observer {
         return this.idBuilding;
     }
 
-
     public void makeProduction() {
 
     }
 
+    private void checkInstrumentForDeploy() {
+        Instrument instrument;
+        instrument = SingletonInstrumentDistributer.getInstance().giveSuitableInstrument(typeBuilding);
+        if(instrument != null && instruments.size() <= 3)
+        {
+            deployInstrument(instrument);
+        }
+    }
+
     public void deployInstrument(Instrument instrument) {
+
         instruments.add(instrument);
     }
 
@@ -61,25 +71,26 @@ public abstract class ResourceBuilding implements Observer {
         lvl++;
     }
 
-    private double calculateCurrentProductionPerDay()
-    {double productionPower = BasicProductionPowerPerDay;
-        
-        for(Instrument i : instruments)
-        {
+    private double calculateCurrentProductionPerDay() {
+        double productionPower = BasicProductionPowerPerDay;
+
+        for (Instrument i : instruments) {
             productionPower *= i.getProductionInfluence();
         }
         return productionPower;
     }
-    private void checkInstrumentForDestroy()
-    {
-        for (Instrument i : instruments)
-        {
-        if("BROKEN".equals(i.getStatus()))
-            instruments.remove(i);
-        }        
+
+    private void checkInstrumentForDestroy() {
+        for (Instrument i : instruments) {
+            if ("BROKEN".equals(i.getStatus())) {
+                instruments.remove(i);
+            }
+        }
     }
+
     public void update(Observable o, Object arg) {
         checkInstrumentForDestroy();
+        checkInstrumentForDeploy();
         currentProductionPerDay = calculateCurrentProductionPerDay();
         makeProduction();
         trader.giveMoney(salaryPerDay);
@@ -92,4 +103,9 @@ public abstract class ResourceBuilding implements Observer {
     boolean readyForDestroy() {
         return trader.getMoneyBalance() <= 0;
     }
+    public String toString()
+    {
+        return "id: " + idBuilding + " type: " + typeBuilding;
+    }
+
 }

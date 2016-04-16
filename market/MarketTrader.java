@@ -17,13 +17,14 @@ public class MarketTrader implements ITrader, Observer {
     private List<Offer> listOfOffers;
     private Market market;
     private boolean isBankrut;
+
     public MarketTrader(DayChanger dayChanger, Market market) {
         this.dayChanger = dayChanger;
         dayChanger.addObserver(this);
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();
         this.market = market;
-        market.registerTrader(this);      
+        market.registerTrader(this);
 
     }
 
@@ -34,7 +35,6 @@ public class MarketTrader implements ITrader, Observer {
     public void setMarket(Market market) {
         this.market = market;
     }
-    
 
     public void receiveList(List<Offer> list) {
         listOfOffers = list;
@@ -44,19 +44,18 @@ public class MarketTrader implements ITrader, Observer {
         return this.IDTrader;
     }
 
-    public void findApropriateOffer() {
-        int idOffer = traderUI.findApropriateOffer(listOfOffers, wallet.getMoneyBalance());
-        market.pickUpOffer(idOffer, IDTrader);
+    public int findApropriateOffer() {
+        return traderUI.findApropriateOffer(listOfOffers, wallet.getMoneyBalance());
     }
 
-    public void findProductionForSell() {
-        ProductPack pack = traderUI.findProductionForSell(listOfOffers, stock);
-        market.applay(pack, IDTrader);
+    public ProductPack findProductionForSell() {
+        return traderUI.findProductionForSell(listOfOffers, stock);
+
     }
 
     public void makeDailyOperation() {
-        findProductionForSell();
-        findApropriateOffer();
+        market.applay(findProductionForSell(), IDTrader);
+        market.pickUpOffer(findApropriateOffer(), IDTrader);
     }
 
     public void update(Observable o, Object arg) {
@@ -86,8 +85,9 @@ public class MarketTrader implements ITrader, Observer {
 
     public void giveMoney(double money) {
         wallet.giveMoney(money);
-        if(wallet.getMoneyBalance() <10)
+        if (wallet.getMoneyBalance() < 10) {
             setBankrut();
+        }
     }
 
     @Override

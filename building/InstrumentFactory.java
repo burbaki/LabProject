@@ -1,34 +1,36 @@
 package building;
 
 import country.DayChanger;
-import country.SingletonMarket;
-import enumerationClasses.EnumConverter;
-import enumerationClasses.TypeBuilding;
-import enumerationClasses.TypeInstrument;
+
+import enumerationClasses.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import market.IWallet;
+
 
 import market.ProductPack;
 import service.InstrumentProperty;
 
-public class InstrumentFactory extends Factory implements IWallet {
-
+public class InstrumentFactory extends Factory  {
+private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
     private TypeInstrument typeInstrument;
     private List<Instrument> readyInstruments;
     private List<Instrument> inProductionInstruments;
+    InstrumentTrader trader;
+    //Integer in Map it is lvl of instrument
     private Map<Integer, List<ProductPack>> requiredProduction;
 
     public InstrumentFactory(TypeBuilding type, DayChanger dayChanger) {
         super(type, dayChanger);
         this.typeInstrument = EnumConverter.BuildingsToInstrument(typeBuilding);
         requiredProduction = InstrumentProperty.getRequiredProduction(typeInstrument);
-        readyInstruments = new LinkedList<>();
-        trader = new InstrumentTrader(stock, typeInstrument, requiredProduction, SingletonMarket.getInstance());
-
+        readyInstruments = new LinkedList<>();        
+        trader = new InstrumentTrader(stock, typeInstrument, getRequiredTypeProductions(), readyInstruments);
     }
 
     public List<Instrument> getListOfReadyInstrument() {
@@ -38,6 +40,8 @@ public class InstrumentFactory extends Factory implements IWallet {
     public void makeInstrument(int LevelOfOnstrument) {
         Instrument newInst = new Instrument(typeInstrument, LevelOfOnstrument);
         inProductionInstruments.add(newInst);
+        log.log(Level.INFO, "begin work with instrument: {0}, {1}",new Object[]{ newInst.toString(), newInst.getStatus()});
+        
     }
 
     private void transferReadyInstrument() {
@@ -47,6 +51,7 @@ public class InstrumentFactory extends Factory implements IWallet {
             if (!m.matches()) {
                 readyInstruments.add(i);
                 inProductionInstruments.remove(i);
+                log.log(Level.INFO, "End work with: {0} instrument", i.toString());
             }
         }
     }
@@ -64,6 +69,7 @@ public class InstrumentFactory extends Factory implements IWallet {
         List<ProductPack> prod = requiredProduction.get(1);
         for (ProductPack p : prod) {
             if (p.getWeight() > stock.GetAmountOfProduct(p.getTypeProduction())) {
+                log.log(Level.INFO,"not enough resources to make {0}", typeInstrument);
                 return false;
             }
         }
@@ -83,27 +89,15 @@ public class InstrumentFactory extends Factory implements IWallet {
         return 5;
     }
 
-    public Instrument giveInstrument(int minLvl) {
-        if (!readyInstruments.isEmpty()) {
-            for (int i = minLvl; minLvl >= 1; i--) {
-                for (Instrument ins : readyInstruments) {
-                    if (ins.getLvl() >= i) {
-                        readyInstruments.remove(ins);
-                        return ins;
-                    }
-                }
-            }
+
+    
+
+    private List<TypeProduction> getRequiredTypeProductions() {
+        List<TypeProduction> list = new ArrayList<>();
+        for(ProductPack pack : requiredProduction.get(0))
+        {
+            list.add(pack.getTypeProduction());
         }
-        return null;
-    }
-
-    @Override
-    public void takeMoney(double money) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void giveMoney(double money) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return list;
     }
 }

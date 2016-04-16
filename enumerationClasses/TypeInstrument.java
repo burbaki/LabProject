@@ -16,6 +16,6 @@ public enum TypeInstrument {
     SAW,
     PUMP,
     EQUIPMENT,
-    MICROSCEMES,
+    MICROSCEMES;
 
 }

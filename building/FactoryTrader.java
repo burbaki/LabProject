@@ -7,6 +7,8 @@ package building;
 
 import enumerationClasses.TypeProduction;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import market.Market;
 import market.Offer;
 
@@ -16,18 +18,22 @@ import market.Offer;
  */
 public class FactoryTrader extends BuildingTrader {
 
+    private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
     List<TypeProduction> requiredResourse;
 
-    public FactoryTrader(Stock stock, TypeProduction type, List<TypeProduction> requiredResourse, Market market) {
-        super(stock, type, market);
+    public FactoryTrader(Stock stock, TypeProduction type, List<TypeProduction> requiredResourse) {
+        super(stock, type);
         this.requiredResourse = requiredResourse;
     }
 
+    @Override
     public void makeDailyOperation() {
         super.makeDailyOperation();
         int IDProductionForBuy = findApropriateOffer();
         if (IDProductionForBuy != -1) {
             market.pickUpOffer(IDProductionForBuy, IDTrader);
+        } else {
+            log.log(Level.INFO, "Dont need resourse , {0} trader", IDTrader);
         }
 
     }
@@ -43,8 +49,8 @@ public class FactoryTrader extends BuildingTrader {
                 }
             }
             for (Offer o : listOfOffers) {
-                if (o.getTypeProduction() == mintype) {
-                    market.pickUpOffer(o.getID(), IDTrader);
+                if (o.getTypeProduction() == mintype
+                        && (getMoneyBalance() - o.getPriceOfPack()) > 0) {
                     return o.getID();
                 }
             }
@@ -54,8 +60,7 @@ public class FactoryTrader extends BuildingTrader {
 
     private boolean isNeedResourse() {
         for (TypeProduction type : requiredResourse) {
-            if( stock.GetAmountOfProduct(type) < 5)
-            {
+            if (stock.GetAmountOfProduct(type) < 5) {
                 return true;
             }
         }

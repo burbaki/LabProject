@@ -11,25 +11,31 @@ public class Market {
     private Double totalBalance;
     private TraderManager traderManager;
     private OffersManager offersManager;
+    private static Market instance = new Market();
+
+
+  public static Market getInstance() {    
+    return instance;
+  }
 
     public Market() {
-        financialOperationController = new FinancialOperationController(traderManager);
-        traderManager = new TraderManager(getListOfOffers(), this);
+        //financialOperationController = new FinancialOperationController
         offersManager = new OffersManager(financialOperationController, dayChanger);
+        traderManager = new TraderManager(getListOfOffers());
+        financialOperationController = new FinancialOperationController(traderManager);
     }
 
     public double getTotalBalance() {
         return totalBalance;
     }
 
-    public List<Offer> getListOfOffers() {
+    private List<Offer> getListOfOffers() {
         return offersManager.getListOfOffer();
     }
 
-    public void registerTrader(ITrader trader ) {
+    public void registerTrader(ITrader trader) {
         traderManager.addTrader(trader);
     }
-    
 
     public void applay(ProductPack pack, int IDTraderSeller) {
         offersManager.addOffer(pack, IDTraderSeller);

@@ -4,33 +4,35 @@ import building.BuildingLifecycleManager;
 import enumerationClasses.TypeBuilding;
 import country.CountryController;
 import java.util.List;
+import java.util.logging.Logger;
 import service.BuildingProperty;
 
 public class BuildingContainer {
 
+    private static Logger log = Logger.getLogger(BuildingContainer.class.getName());
     private CountryController OwnCountry;
-    private double countryCash;
+
     private List<BuildingLifecycleManager> listOfBuildings;
 
     public BuildingContainer(CountryController country) {
         OwnCountry = country;
-        countryCash = 0;
+
     }
 
     public void buildBuilding(TypeBuilding type) {
         if (availableToBuild(type)) {
             BuildingLifecycleManager newBuilding = new BuildingLifecycleManager(type);
+            OwnCountry.giveMoney(BuildingProperty.getCostOfBuilding(type));
             listOfBuildings.add(newBuilding);
+        } else {
+            log.info("Building not build");
         }
-    }
 
-    public void setCountryBallance() {
-        countryCash = OwnCountry.getCashOfCountry();
     }
 
     public boolean availableToBuild(TypeBuilding type) {
-        setCountryBallance();
-        return countryCash > BuildingProperty.getCostOfBuilding(type);
+
+        return OwnCountry.getCashOfCountry() > BuildingProperty.getCostOfBuilding(type);
 
     }
 

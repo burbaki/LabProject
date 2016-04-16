@@ -2,25 +2,26 @@ package building;
 
 import static country.CountryController.dayChanger;
 import enumerationClasses.TypeBuilding;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import service.BuildingProperty;
 
 public class BuildingLifecycleManager {
 
+    private static final Logger log = Logger.getLogger(BuildingLifecycleManager.class.getName());
     private ResourceBuilding building;
 
     public BuildingLifecycleManager(TypeBuilding type) {
         if (createBuilding(type) != null) {
             this.building = createBuilding(type);
+            log.log(Level.INFO, "Created {0} building", building.toString());
         }
-    }
-
-    public void deployInstrument(Instrument instrument) {
-        building.deployInstrument(instrument);
     }
 
     public void upgrade() {
         if (availableToUpgradable()) {
             building.upgrade();
+            log.log(Level.INFO, "Upgrated{0} building", building.toString());
         }
     }
 

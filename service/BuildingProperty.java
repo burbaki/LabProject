@@ -5,7 +5,6 @@
  */
 package service;
 
-
 import enumerationClasses.Level;
 import enumerationClasses.TypeBuilding;
 
@@ -14,28 +13,26 @@ import enumerationClasses.TypeBuilding;
  * @author Burbaki
  */
 public class BuildingProperty {
-    
-   //Разаработать методы и классы для управления XML документами
-    
-    public static double getCostOfBuilding(TypeBuilding type)
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+    //Разаработать методы и классы для управления XML документами
+    public static double getCostOfBuilding(TypeBuilding type) {
+        return 200;
     }
 
     public static double getLvlUpCost(int level) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 200 + 20 * level;
     }
 
     public static double getBasicProductionPowerPerDay(TypeBuilding type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 5;
     }
 
     public static double getAmountOfDeposit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 10000;
     }
 
     public static double getSalary(TypeBuilding type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return 20;
     }
-    
+
 }

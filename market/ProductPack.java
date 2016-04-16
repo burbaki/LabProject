@@ -1,6 +1,5 @@
 package market;
 
-
 import enumerationClasses.TypeProduction;
 
 public class ProductPack {
@@ -21,9 +20,9 @@ public class ProductPack {
         return type;
     }
 
-    public String getString() {
+    public String toString() {
         String answer = new String();
-        return answer + weight.toString() + " " + type.toString();
+        return answer + weight.toString() + " weight, " + type.toString() + " type";
 
     }
 

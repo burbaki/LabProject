@@ -3,6 +3,7 @@ package market;
 import static country.CountryController.dayChanger;
 import country.DayChanger;
 import enumerationClasses.TypeProduction;
+import java.util.LinkedList;
 // participle end
 import java.util.List;
 import java.util.Observable;
@@ -15,12 +16,12 @@ public class OffersManager implements Observer {
     FinancialOperationController financialOperationController;
     DayChanger dayChanger;
 
-    OffersManager(FinancialOperationController financialOperationController, DayChanger o) {
-        this.financialOperationController = financialOperationController;
-        price = new PriceList(dayChanger, listOfOffer);
+    OffersManager(FinancialOperationController financialOperationController, DayChanger dayChanger) {
+        listOfOffer = new LinkedList<>(); 
+        price = new PriceList(listOfOffer);
+        this.financialOperationController = financialOperationController;       
         this.dayChanger = dayChanger;
         dayChanger.addObserver(this);
-
     }
 //незнаю надо ли он ??
     private void removeOffer(int id) {

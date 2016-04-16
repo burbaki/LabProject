@@ -21,5 +21,5 @@ public enum TypeBuilding {
     SILICON,
     COOPER,
     STEEL,
-    BOARDS,
+    BOARDS;
 }

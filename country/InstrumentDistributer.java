@@ -5,10 +5,25 @@
  */
 package country;
 
-/**
- *
- * @author Burbaki
- */
+import building.Instrument;
+import enumerationClasses.TypeBuilding;
+import java.util.LinkedList;
+import java.util.List;
+
+
 public class InstrumentDistributer {
+List<Instrument> list;
+
+public InstrumentDistributer()
+{
+    list = new LinkedList<>();
+}
+    public void applay(Instrument instrument) {
+        list.add(instrument);
+    }
+
+    public Instrument giveSuitableInstrument(TypeBuilding typeBuilding) {
+        return list.remove(0);
+    }
     
 }

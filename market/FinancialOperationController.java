@@ -23,6 +23,10 @@ public class FinancialOperationController {
         list = traderManager.getListOfTraders();
     }
 
+    FinancialOperationController() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public void giveMoneyToTrader(double money, int IDTrader) {
         for (MarketTrader t : list) {
             if (t.getIDTrader() == IDTrader) {

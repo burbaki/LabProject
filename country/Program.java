@@ -15,7 +15,7 @@ public class Program {
     {
         CountryController mainCountry = new CountryController();
         System.out.println("go go go");
-        mainCountry.run();
+        mainCountry.runDays(4);
      
        
     }
