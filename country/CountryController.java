@@ -4,20 +4,24 @@ import enumerationClasses.TypeBuilding;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
+import market.IWallet;
 import market.Market;
+import market.TraderWallet;
 
 public class CountryController implements Observer {
 
+    InstrumentDistributer instrumentDistributer;
     private static Logger log = Logger.getLogger(CountryController.class.getName());
-    private double cashOfCountry;
+    private IWallet wallet;
     public static DayChanger dayChanger;
     private BuildingContainer buildingContainer;
 
     public CountryController() {
-       
+
         this.dayChanger = new DayChanger();
         dayChanger.addObserver(this);
-        cashOfCountry = 1000;
+        wallet = new TraderWallet(1000);
+        instrumentDistributer = new InstrumentDistributer(wallet);
         buildingContainer = new BuildingContainer(this);
         createBasicBuilding();
     }
@@ -28,7 +32,7 @@ public class CountryController implements Observer {
     }
 
     public double getCashOfCountry() {
-        return cashOfCountry;
+        return wallet.getMoneyBalance();
     }
 
     public void run() {
@@ -47,11 +51,12 @@ public class CountryController implements Observer {
     private void createBasicBuilding() {
         buildingContainer.buildBuilding(TypeBuilding.WATER);
         buildingContainer.buildBuilding(TypeBuilding.COIL);
+        buildingContainer.buildBuilding(TypeBuilding.IRONORE);
         buildingContainer.buildBuilding(TypeBuilding.STEEL);
         log.info("Create basic buildings \n");
     }
 
-    void giveMoney(double costOfBuilding) {
-       cashOfCountry -= costOfBuilding;
+    void giveMoney(double cost) {
+        wallet.giveMoney(cost);
     }
 }

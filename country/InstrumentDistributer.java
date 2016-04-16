@@ -9,21 +9,29 @@ import building.Instrument;
 import enumerationClasses.TypeBuilding;
 import java.util.LinkedList;
 import java.util.List;
-
+import market.ITrader;
+import market.IWallet;
 
 public class InstrumentDistributer {
-List<Instrument> list;
 
-public InstrumentDistributer()
-{
-    list = new LinkedList<>();
-}
-    public void applay(Instrument instrument) {
+    List<Instrument> list;
+    IWallet wallet;
+
+    public InstrumentDistributer() {
+        list = new LinkedList<>();
+    }
+
+    public InstrumentDistributer(IWallet wallet) {
+        this.wallet = wallet;
+    }
+
+    public void applay(Instrument instrument, ITrader trader) {
+        trader.takeMoney(instrument.getPrice());
         list.add(instrument);
     }
 
     public Instrument giveSuitableInstrument(TypeBuilding typeBuilding) {
         return list.remove(0);
     }
-    
+
 }

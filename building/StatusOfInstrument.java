@@ -5,9 +5,13 @@ import country.DayChanger;
 import enumerationClasses.TypeInstrument;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import service.InstrumentProperty;
 
 public class StatusOfInstrument implements Observer {
+
+    private static Logger log = Logger.getLogger(StatusOfInstrument.class.getName());
 
     enum Status {
         BROKEN, READY, CREATING
@@ -30,8 +34,8 @@ public class StatusOfInstrument implements Observer {
         return answer;
     }
 
-    public StatusOfInstrument(TypeInstrument type, DayChanger dayChanger) {
-        this.dayChanger = dayChanger;
+    public StatusOfInstrument(TypeInstrument type) {
+        this.dayChanger = country.CountryController.dayChanger;
         dayChanger.addObserver(this);
         status = Status.CREATING;
         CreatingDayLeft = InstrumentProperty.getQuantityDaysOfBuilding();
@@ -39,7 +43,7 @@ public class StatusOfInstrument implements Observer {
     }
 
     private void createLifeBar() {
-        lifeBar = new LifeBar(dayChanger);
+        lifeBar = new LifeBar();
         lifeBar.setHealth(InstrumentProperty.getHealth(this.type));
     }
 
@@ -47,6 +51,7 @@ public class StatusOfInstrument implements Observer {
         createLifeBar();
         status = Status.READY;
         dayChanger.deleteObserver(this);
+        log.log(Level.INFO, "End of creating {0} instrument", type);
     }
 
     public void update(Observable o, Object arg) {

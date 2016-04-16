@@ -3,6 +3,7 @@ package country;
 import building.BuildingLifecycleManager;
 import enumerationClasses.TypeBuilding;
 import country.CountryController;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 import service.BuildingProperty;
@@ -16,7 +17,7 @@ public class BuildingContainer {
 
     public BuildingContainer(CountryController country) {
         OwnCountry = country;
-
+        listOfBuildings = new LinkedList<>();
     }
 
     public void buildBuilding(TypeBuilding type) {
@@ -27,7 +28,6 @@ public class BuildingContainer {
         } else {
             log.info("Building not build");
         }
-
     }
 
     public boolean availableToBuild(TypeBuilding type) {
@@ -44,7 +44,7 @@ public class BuildingContainer {
         return info;
     }
 
-    void makeDailyOperation() {
+     public void makeDailyOperation() {
         checkBuildingBankrut();
     }
 
@@ -52,6 +52,7 @@ public class BuildingContainer {
         for (BuildingLifecycleManager b : listOfBuildings) {
             if (b.readyForDestroy()) {
                 listOfBuildings.remove(b);
+                b.destroy();
             }
         }
     }

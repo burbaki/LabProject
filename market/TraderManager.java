@@ -1,19 +1,24 @@
 package market;
 
-import static country.CountryController.dayChanger;
+import country.DayChanger;
 
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class TraderManager {
+public class TraderManager implements Observer{
 
-    private List<MarketTrader> listOfTrader;
+    private List<ITrader> listOfTrader;
     private List<Offer> listOfOffers;
     private Market ownMarket;
     private static int count;
+    private final DayChanger dayChanger;
 
     TraderManager(List<Offer> listOfOffers) {
+        this.dayChanger = country.CountryController.dayChanger;
+        dayChanger.addObserver(this);
         ownMarket = Market.getInstance();
         listOfTrader = new LinkedList<>();
         this.listOfOffers = listOfOffers;        
@@ -21,7 +26,7 @@ public class TraderManager {
     }
 
     public MarketTrader createMarketTrader() {
-        return new MarketTrader(dayChanger, ownMarket);
+        return new MarketTrader(ownMarket);
     }
 //add anyone trader
 
@@ -34,6 +39,11 @@ public class TraderManager {
     }
 // creating and ading traders
 
+    public void sendListToAllTraders()
+    {
+        for(ITrader t : listOfTrader)
+            t.receiveList(listOfOffers);
+    }
     public void makeTraders(int quantity) {
         for (int i = 0; i < quantity; i++) {
             addTrader(createMarketTrader());
@@ -42,24 +52,21 @@ public class TraderManager {
     }
 // its is need for random deleting unnecessary trader
 
-    public void removeTrader(int IDTrader) {
-        for (MarketTrader t : listOfTrader) {
-            if (t.getIDTrader() == IDTrader) {
-                listOfOffers.remove(t);
+    public void removeBankrutTraders() {
+        for (ITrader t : listOfTrader) {
+            if (t.isTraderBankrut()) {
+                listOfTrader.remove(t);
             }
         }
     }   
 
-    public void findBankrut() {
-        for (MarketTrader t : listOfTrader) {
-            if (t.isTraderBankrut()) {
-                removeTrader(t.getIDTrader());
-            }
-        }
-    }
-
-    public List<MarketTrader> getListOfTraders() {
+    public List<ITrader> getListOfTraders() {
         return listOfTrader;
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        removeBankrutTraders();
+        sendListToAllTraders();
+    }
 }

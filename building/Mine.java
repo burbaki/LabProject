@@ -10,7 +10,8 @@ import java.util.logging.Logger;
 import service.BuildingProperty;
 
 public class Mine extends ResourceBuilding {
-private static Logger log = Logger.getLogger(Mine.class.getName());
+
+    private static Logger log = Logger.getLogger(Mine.class.getName());
     public TypeProduction typeProduction;
     private double amountOfDeposits;
 
@@ -19,6 +20,7 @@ private static Logger log = Logger.getLogger(Mine.class.getName());
         amountOfDeposits = BuildingProperty.getAmountOfDeposit();
         typeProduction = EnumConverter.BuildingsToProduction(type);
         trader = new BuildingTrader(stock, typeProduction);
+        log.log(Level.INFO, "Created buildingTrader with {0}", trader.toString());
     }
 
     public double getAmountOfDeposit() {

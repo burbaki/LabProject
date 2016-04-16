@@ -12,16 +12,16 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import market.ProductPack;
 import service.InstrumentProperty;
 
-public class InstrumentFactory extends Factory  {
-private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
+public class InstrumentFactory extends Factory {
+
+    private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
     private TypeInstrument typeInstrument;
     private List<Instrument> readyInstruments;
     private List<Instrument> inProductionInstruments;
-    InstrumentTrader trader;
+    InstrumentFactoryTrader trader;
     //Integer in Map it is lvl of instrument
     private Map<Integer, List<ProductPack>> requiredProduction;
 
@@ -29,8 +29,9 @@ private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
         super(type, dayChanger);
         this.typeInstrument = EnumConverter.BuildingsToInstrument(typeBuilding);
         requiredProduction = InstrumentProperty.getRequiredProduction(typeInstrument);
-        readyInstruments = new LinkedList<>();        
-        trader = new InstrumentTrader(stock, typeInstrument, getRequiredTypeProductions(), readyInstruments);
+        readyInstruments = new LinkedList<>();
+        trader = new InstrumentFactoryTrader(stock, typeInstrument, getRequiredTypeProductions(), readyInstruments);
+        log.log(Level.INFO, "Created InstrumetFactoryTrader with {0}", trader.toString());
     }
 
     public List<Instrument> getListOfReadyInstrument() {
@@ -40,8 +41,8 @@ private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
     public void makeInstrument(int LevelOfOnstrument) {
         Instrument newInst = new Instrument(typeInstrument, LevelOfOnstrument);
         inProductionInstruments.add(newInst);
-        log.log(Level.INFO, "begin work with instrument: {0}, {1}",new Object[]{ newInst.toString(), newInst.getStatus()});
-        
+        log.log(Level.INFO, "begin work with instrument: {0}, {1}", new Object[]{newInst.toString(), newInst.getStatus()});
+
     }
 
     private void transferReadyInstrument() {
@@ -69,7 +70,7 @@ private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
         List<ProductPack> prod = requiredProduction.get(1);
         for (ProductPack p : prod) {
             if (p.getWeight() > stock.GetAmountOfProduct(p.getTypeProduction())) {
-                log.log(Level.INFO,"not enough resources to make {0}", typeInstrument);
+                log.log(Level.INFO, "not enough resources to make {0}", typeInstrument);
                 return false;
             }
         }
@@ -89,13 +90,9 @@ private static Logger log = Logger.getLogger(FactoryTrader.class.getName());
         return 5;
     }
 
-
-    
-
     private List<TypeProduction> getRequiredTypeProductions() {
         List<TypeProduction> list = new ArrayList<>();
-        for(ProductPack pack : requiredProduction.get(0))
-        {
+        for (ProductPack pack : requiredProduction.get(0)) {
             list.add(pack.getTypeProduction());
         }
         return list;

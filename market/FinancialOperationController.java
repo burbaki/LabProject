@@ -15,7 +15,7 @@ public class FinancialOperationController {
 
     OffersManager offersManager;
     TraderManager traderManager;
-    List<MarketTrader> list;
+    List<ITrader> list;
 
     FinancialOperationController(TraderManager traderManager) {
 
@@ -28,7 +28,7 @@ public class FinancialOperationController {
     }
 
     public void giveMoneyToTrader(double money, int IDTrader) {
-        for (MarketTrader t : list) {
+        for (ITrader t : list) {
             if (t.getIDTrader() == IDTrader) {
                 t.takeMoney(money);
             }
@@ -36,7 +36,7 @@ public class FinancialOperationController {
     }
 
     public void givePackToTrader(ProductPack pack, int IDTrader) {
-        for (MarketTrader t : list) {
+        for (ITrader t : list) {
             if (t.getIDTrader() == IDTrader) {
                 t.takeProductPack(pack);
             }
@@ -44,7 +44,7 @@ public class FinancialOperationController {
     }
 
     public void pickUpMoneyFromTrader(double money, int IDTrader) {
-        for (MarketTrader t : list) {
+        for (ITrader t : list) {
             if (t.getIDTrader() == IDTrader) {
                 t.giveMoney(money);
             }
@@ -53,7 +53,7 @@ public class FinancialOperationController {
 
     public void pickUpProductionFromTrader(ProductPack pack, int IDTrader) {
 
-        for (MarketTrader t : list) {
+        for (ITrader t : list) {
             if (t.getIDTrader() == IDTrader) {
                 t.giveProductPack(pack);
             }

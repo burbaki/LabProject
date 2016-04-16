@@ -13,7 +13,7 @@ public  class Instrument {
 
     public Instrument(TypeInstrument type, int lvl) {
         instrumentCharacteristics = new InstrumentCharacteristics(type, lvl);
-        status = new StatusOfInstrument(type, dayChanger);
+        status = new StatusOfInstrument(type);
         log.log(Level.INFO, "Created isntrument {0} lvl, {1} type", new Object[]{getLvl(), type});
     }
 
@@ -32,6 +32,10 @@ public  class Instrument {
     {
         return ""+ instrumentCharacteristics.getTypeInstrument()
                 + " type, "+ instrumentCharacteristics.getLevel() + "lvl";
+    }
+
+    public double getPrice() {
+        return instrumentCharacteristics.getPrice();
     }
 
 }

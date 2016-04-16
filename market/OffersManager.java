@@ -16,14 +16,15 @@ public class OffersManager implements Observer {
     FinancialOperationController financialOperationController;
     DayChanger dayChanger;
 
-    OffersManager(FinancialOperationController financialOperationController, DayChanger dayChanger) {
-        listOfOffer = new LinkedList<>(); 
+    OffersManager(FinancialOperationController financialOperationController) {
+        listOfOffer = new LinkedList<>();
         price = new PriceList(listOfOffer);
-        this.financialOperationController = financialOperationController;       
-        this.dayChanger = dayChanger;
+        this.financialOperationController = financialOperationController;
+        this.dayChanger = country.CountryController.dayChanger;
         dayChanger.addObserver(this);
     }
 //незнаю надо ли он ??
+
     private void removeOffer(int id) {
         for (Offer o : listOfOffer) {
             if (o.getID() == id) {
@@ -33,18 +34,21 @@ public class OffersManager implements Observer {
     }
 
     public void addOffer(ProductPack pack, int IDTraderSeller) {
-        financialOperationController.pickUpProductionFromTrader(pack, IDTraderSeller );
-        Offer newOffer = new Offer(pack, IDTraderSeller, price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight());
+        financialOperationController.pickUpProductionFromTrader(pack, IDTraderSeller);
+        Offer newOffer = new Offer(pack, IDTraderSeller,
+                price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight());
         listOfOffer.add(newOffer);
+        price.updatePrice();
     }
 
     public void makeOffer(int IDOffer, int IDTraderBuyer) {
         for (Offer o : listOfOffer) {
             if (o.getID() == IDOffer) {
                 financialOperationController.pickUpMoneyFromTrader(o.getPriceOfPack(), o.getIDSeller());
-                financialOperationController.giveMoneyToTrader( o.getPriceOfPack(), o.getIDBuyer());
+                financialOperationController.giveMoneyToTrader(o.getPriceOfPack(), o.getIDBuyer());
                 financialOperationController.givePackToTrader(o, IDTraderBuyer);
                 listOfOffer.remove(o);
+                price.updatePrice();
             }
         }
     }
@@ -61,10 +65,10 @@ public class OffersManager implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {  
+    public void update(Observable o, Object arg) {
         price.updatePrice();
         updatePrices();
-      
+
     }
 
 }

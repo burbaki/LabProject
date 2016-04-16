@@ -12,12 +12,12 @@ public class BuildingLifecycleManager {
     private ResourceBuilding building;
 
     public BuildingLifecycleManager(TypeBuilding type) {
-        if (createBuilding(type) != null) {
-            this.building = createBuilding(type);
-            log.log(Level.INFO, "Created {0} building", building.toString());
+        ResourceBuilding build = createBuilding(type);
+        if (build != null) {
+            this.building = build;
+            log.log(Level.INFO, "Created building {0}", building.toString());
         }
     }
-
     public void upgrade() {
         if (availableToUpgradable()) {
             building.upgrade();
@@ -39,6 +39,10 @@ public class BuildingLifecycleManager {
         return building.readyForDestroy();
     }
 
+    public void destroy()
+    {
+        building.unsubscribe();
+    }
     public String getType() {
         return building.toString();
     }

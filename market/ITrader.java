@@ -28,4 +28,6 @@ public interface ITrader {
     public void setBankrut();
 
     public boolean isTraderBankrut();
+
+    public int getIDTrader();
 }

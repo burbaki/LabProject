@@ -5,8 +5,11 @@
  */
 package building;
 
+import country.DayChanger;
 import enumerationClasses.TypeProduction;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import market.ITrader;
@@ -20,7 +23,7 @@ import market.TraderWallet;
  *
  * @author Burbaki
  */
-class BuildingTrader implements ITrader {
+class BuildingTrader implements ITrader, Observer {
 
     private static Logger log = Logger.getLogger(BuildingTrader.class.getName());
     protected Market market;
@@ -31,6 +34,7 @@ class BuildingTrader implements ITrader {
     private TypeProduction productForSale;
     private final int PRIMARY_CASH = 1000;
     private boolean isBankrut;
+    private DayChanger dayChanger;
 
     BuildingTrader(Stock stock, TypeProduction type) {
         this.stock = stock;
@@ -38,38 +42,42 @@ class BuildingTrader implements ITrader {
         productForSale = type;
         this.market = Market.getInstance();
         market.registerTrader(this);
-        log.log(Level.INFO, "Created buildingTrader with {0}", toString());
+
     }
 
     public void takeProductPack(ProductPack pack) {
+        this.dayChanger = country.CountryController.dayChanger;
+        dayChanger.addObserver(this);
         TypeProduction type = pack.getTypeProduction();
         double weight = pack.getWeight();
         stock.takeProduct(type, weight);
-        log.log(Level.INFO, "Taked pack : {0} ", pack.toString());
+        log.log(Level.INFO, "Taked pack : {0}, trader: {1} ", new Object[]{pack.toString(), IDTrader});
     }
 
     public void giveProductPack(ProductPack pack) {
         TypeProduction type = pack.getTypeProduction();
         double weight = pack.getWeight();
         stock.giveProduct(type, weight);
-        log.log(Level.INFO, "Given pack : {0} ", pack.toString());
+        log.log(Level.INFO, "Given pack : {0}, trader: {1}  ", new Object[]{pack.toString(), IDTrader});
     }
 
     public void takeMoney(double money) {
         wallet.takeMoney(money);
+        log.log(Level.INFO, "Taken cash : {0} $, trader: {1}  ", new Object[]{money, IDTrader});
     }
 
     public void giveMoney(double money) {
         wallet.giveMoney(money);
+        log.log(Level.INFO, "Given cash : {0} $, trader: {1}  ", new Object[]{money, IDTrader});
     }
 
     public double getMoneyBalance() {
         return wallet.getMoneyBalance();
     }
 
-    @Override
     public void receiveList(List<Offer> listOfOffers) {
         this.listOfOffers = listOfOffers;
+        log.log(Level.INFO, " Trader {0} receive list of offers", IDTrader);
     }
 
     @Override
@@ -80,6 +88,7 @@ class BuildingTrader implements ITrader {
     @Override
     public void makeDailyOperation() {
         market.applay(findProductionForSell(), IDTrader);
+        log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
     }
 
     public ProductPack findProductionForSell() {
@@ -91,6 +100,7 @@ class BuildingTrader implements ITrader {
     public void setBankrut() {
         log.log(Level.INFO, "Trader {0} is bankrut", toString());
         isBankrut = true;
+        unsubscribe();
     }
 
     @Override
@@ -100,7 +110,21 @@ class BuildingTrader implements ITrader {
 
     public String toString() {
         String answer = new String();
-        return answer + "Created buildingTrader with id: " + IDTrader + ", selles: " + productForSale;        
+        return answer + "id: " + IDTrader + ", selles: " + productForSale;
+    }
+
+    private void unsubscribe() {
+        dayChanger.deleteObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getIDTrader() {
+        return IDTrader;
     }
 
 }

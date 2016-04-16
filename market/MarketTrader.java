@@ -6,6 +6,7 @@ import enumerationClasses.TypeProduction;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
 
 public class MarketTrader implements ITrader, Observer {
 
@@ -18,14 +19,13 @@ public class MarketTrader implements ITrader, Observer {
     private Market market;
     private boolean isBankrut;
 
-    public MarketTrader(DayChanger dayChanger, Market market) {
-        this.dayChanger = dayChanger;
+    public MarketTrader( Market market) {
+        this.dayChanger = country.CountryController.dayChanger;
         dayChanger.addObserver(this);
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();
         this.market = market;
         market.registerTrader(this);
-
     }
 
     public void setID(int ID) {
@@ -66,6 +66,9 @@ public class MarketTrader implements ITrader, Observer {
         return wallet.getMoneyBalance();
 
     }
+     private void unsubscribe() {
+        dayChanger.deleteObserver(this);
+    }
 
     public void takeProductPack(ProductPack pack) {
         TypeProduction type = pack.getTypeProduction();
@@ -92,7 +95,9 @@ public class MarketTrader implements ITrader, Observer {
 
     @Override
     public void setBankrut() {
+        //log.log(Level.INFO, "Trader {0} is bankrut", toString());
         isBankrut = true;
+        unsubscribe();
     }
 
     @Override

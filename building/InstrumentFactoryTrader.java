@@ -5,12 +5,16 @@
  */
 package building;
 
+import country.DayChanger;
 import country.InstrumentDistributer;
 import country.SingletonInstrumentDistributer;
 import enumerationClasses.TypeInstrument;
 import enumerationClasses.TypeProduction;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import market.ITrader;
@@ -23,28 +27,32 @@ import market.ProductPack;
  *
  * @author Burbaki
  */
-class InstrumentTrader implements ITrader {
+class InstrumentFactoryTrader implements ITrader, Observer {
 
-    private static Logger log = Logger.getLogger(InstrumentTrader.class.getName());
+    private static Logger log = Logger.getLogger(InstrumentFactoryTrader.class.getName());
     private Stock stock;
     private int IDTrader;
     private List<Offer> listOfOffers;
     private IWallet wallet;
     private boolean isBankrut;
-    List<TypeProduction> requiredResourse;
-    TypeInstrument typeInstrument;
-    List<Instrument> instrumentForSelles;
-    Market market;
+    private List<TypeProduction> requiredResourse;
+    private TypeInstrument typeInstrument;
+    private List<Instrument> instrumentForSelles;
+    private Market market;
+    private final DayChanger dayChanger;
 
-    InstrumentTrader(Stock stock, TypeInstrument typeInstrument,
-            List<TypeProduction> requiredProduction, List<Instrument> instruments) {
+    public InstrumentFactoryTrader(Stock stock, TypeInstrument typeInstrument,
+            List<TypeProduction> requiredResourse, List<Instrument> instruments) {
         this.stock = stock;
         this.typeInstrument = typeInstrument;
-        requiredProduction = requiredProduction;
+        this.requiredResourse = requiredResourse;
         instrumentForSelles = instruments;
         market.registerTrader(this);
+        this.dayChanger = country.CountryController.dayChanger;
+        dayChanger.addObserver(this);
     }
 
+    @Override
     public void takeMoney(double money) {
         wallet.takeMoney(money);
     }
@@ -59,18 +67,22 @@ class InstrumentTrader implements ITrader {
 
     public void receiveList(List<Offer> listOfOffers) {
         this.listOfOffers = listOfOffers;
+        log.log(Level.INFO, " Trader {0} receive list of offers", IDTrader);
     }
 
+    @Override
     public void setID(int i) {
         IDTrader = i;
     }
 
+    @Override
     public void makeDailyOperation() {
         int IDProductionForBuy = findApropriateOffer();
         if (IDProductionForBuy != -1) {
             market.pickUpOffer(IDProductionForBuy, IDTrader);
         }
         sellsInstrument();
+        log.log(Level.INFO, " Trader {0} maked daily operation", IDTrader);
     }
 
     public int findApropriateOffer() {
@@ -105,6 +117,7 @@ class InstrumentTrader implements ITrader {
 
     @Override
     public void setBankrut() {
+        log.log(Level.INFO, "Trader {0} is bankrut", toString());
         isBankrut = true;
     }
 
@@ -132,7 +145,30 @@ class InstrumentTrader implements ITrader {
 
     private void sellsInstrument() {
         InstrumentDistributer instrumentDistributer = SingletonInstrumentDistributer.getInstance();
-        instrumentDistributer.applay(findInstrumentForTrade());
+        if (!instrumentForSelles.isEmpty()) {
+            Instrument inst = findInstrumentForTrade();
+            instrumentDistributer.applay(inst, this);
+            log.log(Level.INFO, " trader {0} selles instrument: {1}", new Object[]{IDTrader, inst.toString()});
+        }
+
     }
 
+    private void unsubscribe() {
+        dayChanger.deleteObserver(this);
+    }
+
+    @Override
+    public String toString() {
+        String answer = new String();
+        return answer + "Created buildingTrader with id: " + IDTrader + ", selles: " + typeInstrument;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        makeDailyOperation();
+    }
+
+    public int getIDTrader() {
+        return IDTrader;
+    }
 }
