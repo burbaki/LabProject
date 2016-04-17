@@ -1,11 +1,12 @@
-
 package market;
 
-
 import enumerationClasses.TypeProduction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Offer extends ProductPack {
 
+    private static Logger log = Logger.getLogger(Offer.class.getName());
     static int countOfOffers = 0;
     int idOffer;
     private double value;
@@ -31,6 +32,7 @@ public class Offer extends ProductPack {
 
     public void setPrice(double value) {
         this.value = value;
+        log.log(Level.INFO, " new price was setting {0}", toString());
     }
 
     public int getID() {
@@ -44,10 +46,13 @@ public class Offer extends ProductPack {
     public int getIDBuyer() {
         return buyer;
     }
-    
-    public double getPriceOfPack()
-    {
+
+    public double getPriceOfPack() {
         return value;
+    }
+
+    public String toString() {
+        return super.toString() + "price: " + value;
     }
 
 }

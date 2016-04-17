@@ -126,5 +126,8 @@ class BuildingTrader implements ITrader, Observer {
     public int getIDTrader() {
         return IDTrader;
     }
+     public double getWeightResourseOnSctock(TypeProduction type) {
+        return stock.GetAmountOfProduct(type);
+    }
 
 }

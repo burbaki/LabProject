@@ -7,10 +7,9 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
 public class DayChanger extends Observable {
-  private static Logger log = Logger.getLogger(DayChanger.class.getName());
+
+    private static Logger log = Logger.getLogger(DayChanger.class.getName());
     private List<Observer> observers;
     private long counterOfDays = 0;
 
@@ -19,8 +18,9 @@ public class DayChanger extends Observable {
     }
 
     public void runDays(int day) {
-      for(int i = 1; i <=day; i++)
-          runOneDay();
+        for (int i = 1; i <= day; i++) {
+            runOneDay();
+        }
     }
 
     public void runOneDay() {
@@ -36,17 +36,17 @@ public class DayChanger extends Observable {
     public long getCounterOfDays() {
         return counterOfDays;
     }
-   
-     public void notifyObservers()
-    { log.log(Level.INFO, "New {0}day begin", counterOfDays);
-        for (Observer observer : observers)
-        {
+
+    public void notifyObservers() {
+        log.log(Level.INFO, "New {0} day begin", counterOfDays);
+        for (Observer observer : observers) {
             observer.update(this, counterOfDays);
         }
     }
+
     public void addObserver(Observer o) {
-         observers.add(o);
-         log.log(Level.INFO, "New observer added: {0}", o.getClass());
+        observers.add(o);
+        log.log(Level.INFO, "New observer added: {0}", o.getClass());
     }
 
     public void deleteObserver(Observer o) {
@@ -54,5 +54,4 @@ public class DayChanger extends Observable {
         log.log(Level.INFO, "observer deleted: {0}", o.getClass());
     }
 
-   
 }

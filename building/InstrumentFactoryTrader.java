@@ -6,7 +6,6 @@
 package building;
 
 import country.DayChanger;
-import country.InstrumentDistributer;
 import country.SingletonInstrumentDistributer;
 import enumerationClasses.TypeInstrument;
 import enumerationClasses.TypeProduction;
@@ -144,7 +143,7 @@ class InstrumentFactoryTrader implements ITrader, Observer {
     }
 
     private void sellsInstrument() {
-        InstrumentDistributer instrumentDistributer = SingletonInstrumentDistributer.getInstance();
+        SingletonInstrumentDistributer instrumentDistributer = SingletonInstrumentDistributer.getInstance();
         if (!instrumentForSelles.isEmpty()) {
             Instrument inst = findInstrumentForTrade();
             instrumentDistributer.applay(inst, this);
@@ -170,5 +169,9 @@ class InstrumentFactoryTrader implements ITrader, Observer {
 
     public int getIDTrader() {
         return IDTrader;
+    }
+
+    public double getWeightResourseOnSctock(TypeProduction type) {
+        return stock.GetAmountOfProduct(type);
     }
 }

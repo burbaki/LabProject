@@ -8,9 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OffersManager implements Observer {
 
+    private static Logger log = Logger.getLogger(OffersManager.class.getName());
     private List<Offer> listOfOffer;
     private PriceList price;
     FinancialOperationController financialOperationController;
@@ -23,15 +26,6 @@ public class OffersManager implements Observer {
         this.dayChanger = country.CountryController.dayChanger;
         dayChanger.addObserver(this);
     }
-//незнаю надо ли он ??
-
-    private void removeOffer(int id) {
-        for (Offer o : listOfOffer) {
-            if (o.getID() == id) {
-                listOfOffer.remove(o);
-            }
-        }
-    }
 
     public void addOffer(ProductPack pack, int IDTraderSeller) {
         financialOperationController.pickUpProductionFromTrader(pack, IDTraderSeller);
@@ -39,6 +33,7 @@ public class OffersManager implements Observer {
                 price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight());
         listOfOffer.add(newOffer);
         price.updatePrice();
+        log.log(Level.INFO, "Add new offer {0} from {1} trader", new Object[]{newOffer, IDTraderSeller});
     }
 
     public void makeOffer(int IDOffer, int IDTraderBuyer) {
@@ -48,6 +43,7 @@ public class OffersManager implements Observer {
                 financialOperationController.giveMoneyToTrader(o.getPriceOfPack(), o.getIDBuyer());
                 financialOperationController.givePackToTrader(o, IDTraderBuyer);
                 listOfOffer.remove(o);
+                log.log(Level.INFO, "Maked offer {0}. Buyer : {1} trader", new Object[]{o, IDTraderBuyer});
                 price.updatePrice();
             }
         }
@@ -58,17 +54,19 @@ public class OffersManager implements Observer {
     }
 
     public void updatePrices() {
+        //price.updatePrice();
         for (Offer o : listOfOffer) {
             TypeProduction type = o.getTypeProduction();
             o.setPrice(price.getPriceForOneTonn(type) * o.getWeight());
+            log.log(Level.INFO, "updated prices");
         }
     }
 
     @Override
     public void update(Observable o, Object arg) {
         price.updatePrice();
+        log.log(Level.INFO, "pricelist was updated");
         updatePrices();
-
     }
 
 }

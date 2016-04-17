@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MarketTrader implements ITrader, Observer {
 
+    private static Logger log = Logger.getLogger(MarketTrader.class.getName());
     private IWallet wallet;
     private Stock stock;
     private int IDTrader;
@@ -19,17 +21,18 @@ public class MarketTrader implements ITrader, Observer {
     private Market market;
     private boolean isBankrut;
 
-    public MarketTrader( Market market) {
+    public MarketTrader() {
         this.dayChanger = country.CountryController.dayChanger;
         dayChanger.addObserver(this);
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();
-        this.market = market;
+        this.market = Market.getInstance();
         market.registerTrader(this);
     }
 
     public void setID(int ID) {
         IDTrader = ID;
+        log.log( Level.INFO, "Set trader's id : {0}", ID);
     }
 
     public void setMarket(Market market) {
@@ -38,6 +41,7 @@ public class MarketTrader implements ITrader, Observer {
 
     public void receiveList(List<Offer> list) {
         listOfOffers = list;
+        log.log(Level.INFO, " Trader {0} receive list of offers", IDTrader);
     }
 
     public int getIDTrader() {
@@ -56,6 +60,7 @@ public class MarketTrader implements ITrader, Observer {
     public void makeDailyOperation() {
         market.applay(findProductionForSell(), IDTrader);
         market.pickUpOffer(findApropriateOffer(), IDTrader);
+        log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
     }
 
     public void update(Observable o, Object arg) {
@@ -66,7 +71,8 @@ public class MarketTrader implements ITrader, Observer {
         return wallet.getMoneyBalance();
 
     }
-     private void unsubscribe() {
+
+    private void unsubscribe() {
         dayChanger.deleteObserver(this);
     }
 
@@ -95,7 +101,7 @@ public class MarketTrader implements ITrader, Observer {
 
     @Override
     public void setBankrut() {
-        //log.log(Level.INFO, "Trader {0} is bankrut", toString());
+        log.log(Level.INFO, "Trader {0} is bankrut", toString());
         isBankrut = true;
         unsubscribe();
     }
@@ -103,5 +109,10 @@ public class MarketTrader implements ITrader, Observer {
     @Override
     public boolean isTraderBankrut() {
         return isBankrut;
+    }
+
+    @Override
+    public double getWeightResourseOnSctock(TypeProduction type) {
+        return stock.GetAmountOfProduct(type);
     }
 }

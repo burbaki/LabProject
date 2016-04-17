@@ -5,6 +5,7 @@
  */
 package market;
 
+import enumerationClasses.TypeProduction;
 import java.util.List;
 
 public interface ITrader {
@@ -24,6 +25,8 @@ public interface ITrader {
     public void makeDailyOperation();
 
     public double getMoneyBalance();
+
+    public double getWeightResourseOnSctock(TypeProduction type);
 
     public void setBankrut();
 

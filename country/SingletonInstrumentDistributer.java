@@ -5,21 +5,44 @@
  */
 package country;
 
-/**
- *
- * @author Burbaki
- */
+import building.Instrument;
+import enumerationClasses.TypeBuilding;
+import java.util.LinkedList;
+import java.util.List;
+import market.ITrader;
+import market.IWallet;
+import market.TraderWallet;
+
 public class SingletonInstrumentDistributer {
 
-    private static InstrumentDistributer instance;
+    List<Instrument> list;
+    IWallet wallet;
+    private static SingletonInstrumentDistributer instance;
 
     private SingletonInstrumentDistributer() {
     }
 
-    public static InstrumentDistributer getInstance() {
-        if (instance == null) {
-            instance = new InstrumentDistributer();
-        }
-        return instance;
+    public static SingletonInstrumentDistributer getInstance() {
+        if (instance != null) {
+            return instance;
+        }        
+        return null;
     }
+
+    public SingletonInstrumentDistributer(IWallet wallet) {
+        if (instance == null) {
+            instance = new SingletonInstrumentDistributer();
+            instance.wallet = wallet;
+        }
+    }
+
+    public void applay(Instrument instrument, ITrader trader) {
+        trader.takeMoney(instrument.getPrice());
+        list.add(instrument);
+    }
+
+    public Instrument giveSuitableInstrument(TypeBuilding typeBuilding) {
+        return list.remove(0);
+    }
+
 }

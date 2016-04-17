@@ -5,7 +5,10 @@
  */
 package market;
 
+import country.DayChanger;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,19 +16,8 @@ import java.util.List;
  */
 public class FinancialOperationController {
 
-    OffersManager offersManager;
-    TraderManager traderManager;
+    private static Logger log = Logger.getLogger(FinancialOperationController.class.getName());
     List<ITrader> list;
-
-    FinancialOperationController(TraderManager traderManager) {
-
-        this.traderManager = traderManager;
-        list = traderManager.getListOfTraders();
-    }
-
-    FinancialOperationController() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public void giveMoneyToTrader(double money, int IDTrader) {
         for (ITrader t : list) {
@@ -33,6 +25,7 @@ public class FinancialOperationController {
                 t.takeMoney(money);
             }
         }
+        log.log(Level.INFO, "Given {0} $ to {1} trader", new Object[]{money, IDTrader});
     }
 
     public void givePackToTrader(ProductPack pack, int IDTrader) {
@@ -41,23 +34,40 @@ public class FinancialOperationController {
                 t.takeProductPack(pack);
             }
         }
+        log.log(Level.INFO, "Given {0} $ to {1} trader", new Object[]{pack, IDTrader});
     }
 
     public void pickUpMoneyFromTrader(double money, int IDTrader) {
         for (ITrader t : list) {
             if (t.getIDTrader() == IDTrader) {
-                t.giveMoney(money);
+                if (money < t.getMoneyBalance()) {
+                    t.giveMoney(money);
+                } else {
+                    log.log(Level.INFO, "haven't enough money in {0} trader's balance", IDTrader);
+                    return;
+                }
             }
         }
+        log.log(Level.INFO, "take {0} $ from {1} trader", new Object[]{money, IDTrader});
     }
 
     public void pickUpProductionFromTrader(ProductPack pack, int IDTrader) {
 
         for (ITrader t : list) {
             if (t.getIDTrader() == IDTrader) {
-                t.giveProductPack(pack);
+                if (pack.getWeight() < t.getWeightResourseOnSctock(pack.getTypeProduction())) {
+                    t.giveProductPack(pack);
+                } else {
+                    log.log(Level.INFO, "haven't enough resourse in {0} trader's stock", IDTrader);
+                    return;
+                }
             }
         }
+        log.log(Level.INFO, "take {0} $ from {1} trader", new Object[]{pack, IDTrader});
     }
 
+    void receiveListOfTraders(List<ITrader> listOfTraders) {
+        this.list = listOfTraders;
+        log.log(Level.INFO, "receive new list of traders");
+    }
 }
