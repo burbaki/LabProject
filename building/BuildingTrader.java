@@ -31,12 +31,14 @@ class BuildingTrader implements ITrader, Observer {
     protected int IDTrader;
     protected List<Offer> listOfOffers;
     private IWallet wallet;
-    private TypeProduction productForSale;
+    protected TypeProduction productForSale;
     private final int PRIMARY_CASH = 1000;
     private boolean isBankrut;
     private DayChanger dayChanger;
 
     BuildingTrader(Stock stock, TypeProduction type) {
+        this.dayChanger = country.CountryController.dayChanger;
+        dayChanger.addObserver(this);
         this.stock = stock;
         wallet = new TraderWallet(PRIMARY_CASH);
         productForSale = type;
@@ -45,9 +47,8 @@ class BuildingTrader implements ITrader, Observer {
 
     }
 
+    @Override
     public void takeProductPack(ProductPack pack) {
-        this.dayChanger = country.CountryController.dayChanger;
-        dayChanger.addObserver(this);
         TypeProduction type = pack.getTypeProduction();
         double weight = pack.getWeight();
         stock.takeProduct(type, weight);
@@ -87,12 +88,14 @@ class BuildingTrader implements ITrader, Observer {
 
     @Override
     public void makeDailyOperation() {
-        market.applay(findProductionForSell(), IDTrader);
+        if (stock.GetAmountOfProduct(productForSale) != 0) {
+            market.applay(findProductionForSell(), IDTrader);
+        }
         log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
     }
 
     public ProductPack findProductionForSell() {
-        double weightForSale = stock.GetAmountOfProduct(productForSale) / 3;
+        double weightForSale = Math.round(stock.GetAmountOfProduct(productForSale) * 0.8);
         return new ProductPack(weightForSale, productForSale);
     }
 
@@ -119,14 +122,15 @@ class BuildingTrader implements ITrader, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        makeDailyOperation();
     }
 
     @Override
     public int getIDTrader() {
         return IDTrader;
     }
-     public double getWeightResourseOnSctock(TypeProduction type) {
+
+    public double getWeightResourseOnSctock(TypeProduction type) {
         return stock.GetAmountOfProduct(type);
     }
 

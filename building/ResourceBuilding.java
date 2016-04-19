@@ -1,7 +1,7 @@
 package building;
 
 import country.DayChanger;
-import country.SingletonInstrumentDistributer;
+import country.InstrumentDistributer;
 import enumerationClasses.TypeBuilding;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,8 +27,8 @@ public abstract class ResourceBuilding implements Observer {
     protected TypeBuilding typeBuilding;
     private DayChanger dayChanger;
 
-    public ResourceBuilding(TypeBuilding type, DayChanger dayChanger) {
-        this.dayChanger = dayChanger;
+    public ResourceBuilding(TypeBuilding type) {
+        this.dayChanger = country.CountryController.dayChanger;
         dayChanger.addObserver(this);
         typeBuilding = type;
         BasicProductionPowerPerDay = BuildingProperty.getBasicProductionPowerPerDay(type);
@@ -48,12 +48,14 @@ public abstract class ResourceBuilding implements Observer {
     }
 
     private void checkInstrumentForDeploy() {
-        Instrument instrument;
-        instrument = SingletonInstrumentDistributer.getInstance().giveSuitableInstrument(typeBuilding);
-        if (instrument != null && instruments.size() <= 3) {
-            deployInstrument(instrument);
-            log.log(Level.INFO, "Building {0}, deployed {1} instrument",  
-                    new Object[]{toString(), instrument.toString()});
+        if (InstrumentDistributer.getInstance().isInstrumentAvailable()) {
+            Instrument instrument
+                    = InstrumentDistributer.getInstance().giveSuitableInstrument(typeBuilding,trader.getIDTrader());
+            if (instrument != null && instruments.size() <= 3) {
+                deployInstrument(instrument);
+                log.log(Level.INFO, "Building {0}, deployed {1} instrument",
+                        new Object[]{toString(), instrument.toString()});
+            }
         }
     }
 
@@ -87,8 +89,8 @@ public abstract class ResourceBuilding implements Observer {
         for (Instrument i : instruments) {
             if ("BROKEN".equals(i.getStatus())) {
                 instruments.remove(i);
-               log.log(Level.INFO, "Building {0} destroy {1} instrument", 
-                       new Object[]{toString(), i.toString()});
+                log.log(Level.INFO, "Building {0} destroy {1} instrument",
+                        new Object[]{toString(), i.toString()});
             }
         }
     }
@@ -99,15 +101,18 @@ public abstract class ResourceBuilding implements Observer {
         currentProductionPerDay = calculateCurrentProductionPerDay();
         makeProduction();
         trader.giveMoney(salaryPerDay);
+        log.log(Level.INFO, "spend {0} for pay workers", salaryPerDay);
         // i dont use observer in financeManager class. because i dont sure that production
-        // produse early that finance manager began his work.
-        trader.makeDailyOperation();
+        // produse early that finance manager began his work.        
         readyForDestroy();
     }
 
     boolean readyForDestroy() {
-        log.log(Level.INFO, "Building {0}, ready for destroy", toString());
-        return trader.getMoneyBalance() <= 0;
+        if (trader.getMoneyBalance() <= 10) {
+            log.log(Level.INFO, "Building {0}, ready for destroy", toString());
+            return true;
+        }
+        return false;
     }
 
     public void unsubscribe() {

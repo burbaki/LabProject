@@ -32,19 +32,18 @@ public class OffersManager implements Observer {
         Offer newOffer = new Offer(pack, IDTraderSeller,
                 price.getPriceForOneTonn(pack.getTypeProduction()) * pack.getWeight());
         listOfOffer.add(newOffer);
-        price.updatePrice();
         log.log(Level.INFO, "Add new offer {0} from {1} trader", new Object[]{newOffer, IDTraderSeller});
     }
 
     public void makeOffer(int IDOffer, int IDTraderBuyer) {
         for (Offer o : listOfOffer) {
             if (o.getID() == IDOffer) {
-                financialOperationController.pickUpMoneyFromTrader(o.getPriceOfPack(), o.getIDSeller());
-                financialOperationController.giveMoneyToTrader(o.getPriceOfPack(), o.getIDBuyer());
+                financialOperationController.pickUpMoneyFromTrader(o.getPriceOfPack(), IDTraderBuyer);
+                financialOperationController.giveMoneyToTrader(o.getPriceOfPack(), o.getIDSeller());
                 financialOperationController.givePackToTrader(o, IDTraderBuyer);
                 listOfOffer.remove(o);
                 log.log(Level.INFO, "Maked offer {0}. Buyer : {1} trader", new Object[]{o, IDTraderBuyer});
-                price.updatePrice();
+                break;
             }
         }
     }
@@ -54,12 +53,11 @@ public class OffersManager implements Observer {
     }
 
     public void updatePrices() {
-        //price.updatePrice();
         for (Offer o : listOfOffer) {
             TypeProduction type = o.getTypeProduction();
             o.setPrice(price.getPriceForOneTonn(type) * o.getWeight());
-            log.log(Level.INFO, "updated prices");
         }
+        log.log(Level.INFO, "updated prices");
     }
 
     @Override

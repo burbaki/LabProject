@@ -1,6 +1,6 @@
 package building;
 
-import static country.CountryController.dayChanger;
+
 import enumerationClasses.TypeBuilding;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +42,7 @@ public class BuildingLifecycleManager {
     public void destroy()
     {
         building.unsubscribe();
+        log.log(Level.INFO, "Destroy {0} building", building.toString());
     }
     public String getType() {
         return building.toString();
@@ -56,19 +57,19 @@ public class BuildingLifecycleManager {
                 || type == TypeBuilding.PUMP)
                 || type == TypeBuilding.EQUIPMENT)
                 || type == TypeBuilding.MICROSCEMES) {
-            return new InstrumentFactory(type, dayChanger);
+            return new InstrumentFactory(type);
         } else if (type == TypeBuilding.COIL
                 || type == TypeBuilding.WOOD
                 || type == TypeBuilding.IRONORE
                 || type == TypeBuilding.WATER
                 || type == TypeBuilding.COOPERORE
                 || type == TypeBuilding.SILICON) {
-            return new Mine(type, dayChanger);
+            return new Mine(type);
         } else if (type == TypeBuilding.COOPER
                 || type == TypeBuilding.MICROSCEMES
                 || type == TypeBuilding.STEEL
                 || type == TypeBuilding.BOARDS) {
-            return new Factory(type, dayChanger);
+            return new Factory(type);
         }
         return null;
     }

@@ -36,6 +36,7 @@ public class TraderManager implements Observer {
         if (trader != null) {
             trader.receiveList(listOfOffers);
             trader.setID(count++);
+            listOfTrader.add(trader);
             log.log(Level.INFO, "addedTrader {0} with id: {1}",
                     new Object[]{trader.getClass(), trader.getIDTrader()});
         }

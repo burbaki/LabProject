@@ -9,7 +9,7 @@ import enumerationClasses.TypeProduction;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import market.Market;
+
 import market.Offer;
 
 /**
@@ -28,43 +28,37 @@ public class FactoryTrader extends BuildingTrader {
 
     @Override
     public void makeDailyOperation() {
-        super.makeDailyOperation();
+        if (stock.GetAmountOfProduct(productForSale) != 0) {
+            market.applay(findProductionForSell(), IDTrader);
+        }
         int IDProductionForBuy = findApropriateOffer();
         if (IDProductionForBuy != -1) {
             market.pickUpOffer(IDProductionForBuy, IDTrader);
+            System.out.println(stock);
         } else {
             log.log(Level.INFO, "Dont need resourse , {0} trader", IDTrader);
         }
-
+        log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
     }
 
     public int findApropriateOffer() {
-        double min = stock.GetAmountOfProduct(requiredResourse.get(0));
-        if (isNeedResourse()) {
-            TypeProduction mintype = requiredResourse.get(0);
-            for (TypeProduction type : requiredResourse) {
-
-                if (min > stock.GetAmountOfProduct(type)) {
-                    mintype = type;
-                }
+        double minRes = stock.GetAmountOfProduct(requiredResourse.get(0));
+        TypeProduction minType = requiredResourse.get(0);
+        for (TypeProduction type : requiredResourse) {
+            if (minRes > stock.GetAmountOfProduct(type)) {
+                minRes = stock.GetAmountOfProduct(type);
+                minType = type;
+                break;
             }
+        }
+        if (minRes <= 5) {
             for (Offer o : listOfOffers) {
-                if (o.getTypeProduction() == mintype
-                        && (getMoneyBalance() - o.getPriceOfPack()) > 0) {
+                if (o.getTypeProduction() == minType
+                        && o.getPriceOfPack() < this.getMoneyBalance()) {
                     return o.getID();
                 }
             }
         }
         return -1;
     }
-
-    private boolean isNeedResourse() {
-        for (TypeProduction type : requiredResourse) {
-            if (stock.GetAmountOfProduct(type) < 5) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

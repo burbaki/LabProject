@@ -15,8 +15,8 @@ public class Mine extends ResourceBuilding {
     public TypeProduction typeProduction;
     private double amountOfDeposits;
 
-    public Mine(TypeBuilding type, DayChanger dayChanger) {
-        super(type, dayChanger);
+    public Mine(TypeBuilding type) {
+        super(type);
         amountOfDeposits = BuildingProperty.getAmountOfDeposit();
         typeProduction = EnumConverter.BuildingsToProduction(type);
         trader = new BuildingTrader(stock, typeProduction);

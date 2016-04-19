@@ -22,9 +22,9 @@ public class Market {
         log.log(Level.INFO, "Financial operation controler was created");
         offersManager = new OffersManager(financialOperationController);
         log.log(Level.INFO, "Offers manager was created");
-        traderManager = new TraderManager(getListOfOffers());
-        log.log(Level.INFO, "Trader Manager was created");
+        traderManager = new TraderManager(getListOfOffers());       
         financialOperationController.receiveListOfTraders(getListOfTraders());
+         log.log(Level.INFO, "Trader Manager was created");
     }
 
     public double getTotalBalance() {
@@ -46,14 +46,12 @@ public class Market {
     }
 
     public void applay(ProductPack pack, int IDTraderSeller) {
-        offersManager.addOffer(pack, IDTraderSeller);
-        //offersManager.updatePrices();
+        offersManager.addOffer(pack, IDTraderSeller);     
         traderManager.sendListToAllTraders();
     }
 
     public void pickUpOffer(int IDOffer, int IDTraderBuyer) {
-        offersManager.makeOffer(IDOffer, IDTraderBuyer);
-        //offersManager.updatePrices();
+        offersManager.makeOffer(IDOffer, IDTraderBuyer);       
         traderManager.sendListToAllTraders();
     }
 

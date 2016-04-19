@@ -13,11 +13,6 @@ public class Offer extends ProductPack {
     private final int seller;
     private int buyer;
 
-    public Offer(double weight, TypeProduction type, int idSeller) {
-        super(weight, type);
-        this.seller = idSeller;
-        idOffer = countOfOffers++;
-    }
 
     public Offer(ProductPack pack, int idSeller, double value) {
         super(pack.getWeight(), pack.getTypeProduction());
@@ -32,7 +27,7 @@ public class Offer extends ProductPack {
 
     public void setPrice(double value) {
         this.value = value;
-        log.log(Level.INFO, " new price was setting {0}", toString());
+        //log.log(Level.INFO, " new price was setting {0}", toString());
     }
 
     public int getID() {
@@ -51,6 +46,7 @@ public class Offer extends ProductPack {
         return value;
     }
 
+    @Override
     public String toString() {
         return super.toString() + "price: " + value;
     }

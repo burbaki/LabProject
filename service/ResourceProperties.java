@@ -6,6 +6,7 @@
 package service;
 
 import enumerationClasses.TypeProduction;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,11 +16,28 @@ import java.util.List;
 public class ResourceProperties {
 
     public static double getBasicValue(TypeProduction type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double price = 1;
+        /*if (type == TypeProduction.WATER) {
+            price = 5;
+        } else if (type == TypeProduction.COIL) {
+            price = 8;
+        } else if (type == TypeProduction.IRONORE) {
+            price = 9;
+        }
+        else if (type == TypeProduction.STEEL) {
+            price = 15;
+        }*/
+        return price;
     }
 
     public static List<TypeProduction> getRequiredProduction(TypeProduction typeProduction) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<TypeProduction> list = new LinkedList<>();
+        if (typeProduction == TypeProduction.STEEL) {
+            list.add(TypeProduction.COIL);
+            list.add(TypeProduction.IRONORE);
+            list.add(TypeProduction.WATER);
+        }
+        return list;
     }
-    
+
 }

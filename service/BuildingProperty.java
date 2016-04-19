@@ -24,6 +24,8 @@ public class BuildingProperty {
     }
 
     public static double getBasicProductionPowerPerDay(TypeBuilding type) {
+        if(type == TypeBuilding.STEEL)
+            return 2;
         return 5;
     }
 

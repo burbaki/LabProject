@@ -10,7 +10,7 @@ import market.TraderWallet;
 
 public class CountryController implements Observer {
 
-    SingletonInstrumentDistributer instrumentDistributer;
+    InstrumentDistributer instrumentDistributer;
     private static Logger log = Logger.getLogger(CountryController.class.getName());
     private IWallet wallet;
     public static DayChanger dayChanger;
@@ -21,7 +21,7 @@ public class CountryController implements Observer {
         this.dayChanger = new DayChanger();
         dayChanger.addObserver(this);
         wallet = new TraderWallet(1000);
-        instrumentDistributer = new SingletonInstrumentDistributer(wallet);
+        instrumentDistributer = new InstrumentDistributer(wallet);
         buildingContainer = new BuildingContainer(this);
         createBasicBuilding();
     }
@@ -35,9 +35,7 @@ public class CountryController implements Observer {
         return wallet.getMoneyBalance();
     }
 
-    public void run() {
-        dayChanger.runOneDay();
-    }
+
 
     public void runDays(int day) {
         dayChanger.runDays(day);

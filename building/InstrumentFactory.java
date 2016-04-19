@@ -25,8 +25,8 @@ public class InstrumentFactory extends Factory {
     //Integer in Map it is lvl of instrument
     private Map<Integer, List<ProductPack>> requiredProduction;
 
-    public InstrumentFactory(TypeBuilding type, DayChanger dayChanger) {
-        super(type, dayChanger);
+    public InstrumentFactory(TypeBuilding type) {
+        super(type);
         this.typeInstrument = EnumConverter.BuildingsToInstrument(typeBuilding);
         requiredProduction = InstrumentProperty.getRequiredProduction(typeInstrument);
         readyInstruments = new LinkedList<>();

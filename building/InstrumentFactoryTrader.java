@@ -6,7 +6,7 @@
 package building;
 
 import country.DayChanger;
-import country.SingletonInstrumentDistributer;
+import country.InstrumentDistributer;
 import enumerationClasses.TypeInstrument;
 import enumerationClasses.TypeProduction;
 
@@ -143,7 +143,7 @@ class InstrumentFactoryTrader implements ITrader, Observer {
     }
 
     private void sellsInstrument() {
-        SingletonInstrumentDistributer instrumentDistributer = SingletonInstrumentDistributer.getInstance();
+        InstrumentDistributer instrumentDistributer = InstrumentDistributer.getInstance();
         if (!instrumentForSelles.isEmpty()) {
             Instrument inst = findInstrumentForTrade();
             instrumentDistributer.applay(inst, this);
