@@ -13,12 +13,25 @@ import market.ITrader;
 
 public class DayChanger extends Observable {
 
+    private static DayChanger instance;
     private static Logger log = Logger.getLogger(DayChanger.class.getName());
-    private List<Observer> observers;
+    private List<Observer> buildingObservers;
+    private List<Observer> traderObservers;
+    private List<Observer> othersObservers;
     private long counterOfDays = 0;
 
+    public static DayChanger getInstance() {
+        if (instance == null) {
+            instance = new DayChanger();
+        }
+        return instance;
+    }
+
     public DayChanger() {
-        observers = new LinkedList<>();
+        buildingObservers = new LinkedList<>();
+        traderObservers = new LinkedList<>();
+        othersObservers = new LinkedList<>();
+
     }
 
     public void runDays(int day) {
@@ -43,38 +56,40 @@ public class DayChanger extends Observable {
 
     public void notifyObservers() {
         log.log(Level.INFO, "New {0} day begin", counterOfDays);
-        for (Observer observer : observers) {
-            if (observer instanceof ResourceBuilding) {
-                observer.update(this, counterOfDays);
-            }
+        for (Observer o : buildingObservers) {
+            o.update(this, counterOfDays);
         }
-        for (Observer observer : observers) {
-            if (observer instanceof ITrader) {
-                observer.update(this, counterOfDays);
-            }
-        }
-        try {
-            Iterator<Observer> iter = observers.iterator();
-            while (iter.hasNext()) {
-                Observer o = iter.next();
-                if (!(o instanceof ITrader || o instanceof ResourceBuilding)) {
-                    o.update(this, log);
-                }
-            }
-        } catch (ConcurrentModificationException e) {
+        for (Observer o : traderObservers) {
+            o.update(this, counterOfDays);
         }
 
+        for (Observer o : othersObservers) {
+            o.update(this, counterOfDays);
+        }
     }
 
     @Override
     public void addObserver(Observer o) {
-        observers.add(o);
+        if (o instanceof ResourceBuilding) {
+            buildingObservers.add(o);
+        } else if (o instanceof ITrader) {
+            traderObservers.add(o);
+        } else {
+            othersObservers.add(o);
+        }
         log.log(Level.INFO, "New observer added: {0}", o.getClass());
     }
 
     @Override
     public void deleteObserver(Observer o) {
-        observers.remove(o);
+        if (o instanceof ResourceBuilding) {
+            buildingObservers.remove(o);
+        } else if (o instanceof ITrader) {
+            traderObservers.remove(o);
+
+        } else {
+            othersObservers.remove(o);
+        }
         log.log(Level.INFO, "observer deleted: {0}", o.getClass());
     }
 

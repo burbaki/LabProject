@@ -28,7 +28,7 @@ public abstract class ResourceBuilding implements Observer {
     private DayChanger dayChanger;
 
     public ResourceBuilding(TypeBuilding type) {
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger =  DayChanger.getInstance();
         dayChanger.addObserver(this);
         typeBuilding = type;
         BasicProductionPowerPerDay = BuildingProperty.getBasicProductionPowerPerDay(type);

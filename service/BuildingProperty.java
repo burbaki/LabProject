@@ -24,8 +24,10 @@ public class BuildingProperty {
     }
 
     public static double getBasicProductionPowerPerDay(TypeBuilding type) {
-        if(type == TypeBuilding.STEEL)
+        if (type == TypeBuilding.STEEL || type == TypeBuilding.COOPERORE) {
             return 2;
+        }else if (type == TypeBuilding.BOARDS)
+            return 1;
         return 5;
     }
 
@@ -34,7 +36,7 @@ public class BuildingProperty {
     }
 
     public static double getSalary(TypeBuilding type) {
-       return 20;
+        return 20;
     }
 
 }

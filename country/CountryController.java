@@ -13,14 +13,14 @@ public class CountryController implements Observer {
     InstrumentDistributer instrumentDistributer;
     private static Logger log = Logger.getLogger(CountryController.class.getName());
     private IWallet wallet;
-    public static DayChanger dayChanger;
     private BuildingContainer buildingContainer;
+    private final DayChanger dayChanger;
 
     public CountryController() {
 
-        this.dayChanger = new DayChanger();
+        this.dayChanger = DayChanger.getInstance();
         dayChanger.addObserver(this);
-        wallet = new TraderWallet(1000);
+        wallet = new TraderWallet(100000);
         instrumentDistributer = new InstrumentDistributer(wallet);
         buildingContainer = new BuildingContainer(this);
         createBasicBuilding();
@@ -35,8 +35,6 @@ public class CountryController implements Observer {
         return wallet.getMoneyBalance();
     }
 
-
-
     public void runDays(int day) {
         dayChanger.runDays(day);
     }
@@ -50,6 +48,11 @@ public class CountryController implements Observer {
         buildingContainer.buildBuilding(TypeBuilding.WATER);
         buildingContainer.buildBuilding(TypeBuilding.COIL);
         buildingContainer.buildBuilding(TypeBuilding.IRONORE);
+        buildingContainer.buildBuilding(TypeBuilding.COOPER);
+        buildingContainer.buildBuilding(TypeBuilding.COOPERORE);
+        buildingContainer.buildBuilding(TypeBuilding.WOOD);
+        buildingContainer.buildBuilding(TypeBuilding.BOARDS);
+        buildingContainer.buildBuilding(TypeBuilding.SILICON);
         buildingContainer.buildBuilding(TypeBuilding.STEEL);
         log.info("Create basic buildings \n");
     }

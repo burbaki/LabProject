@@ -37,7 +37,7 @@ class BuildingTrader implements ITrader, Observer {
     private DayChanger dayChanger;
 
     BuildingTrader(Stock stock, TypeProduction type) {
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger =  DayChanger.getInstance();
         dayChanger.addObserver(this);
         this.stock = stock;
         wallet = new TraderWallet(PRIMARY_CASH);

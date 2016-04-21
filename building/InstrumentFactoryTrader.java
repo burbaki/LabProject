@@ -47,7 +47,7 @@ class InstrumentFactoryTrader implements ITrader, Observer {
         this.requiredResourse = requiredResourse;
         instrumentForSelles = instruments;
         market.registerTrader(this);
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger =  DayChanger.getInstance();;
         dayChanger.addObserver(this);
     }
 

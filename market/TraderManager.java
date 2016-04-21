@@ -19,7 +19,7 @@ public class TraderManager implements Observer {
     private final DayChanger dayChanger;
 
     TraderManager(List<Offer> listOfOffers) {
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger = DayChanger.getInstance();
         dayChanger.addObserver(this);
         ownMarket = Market.getInstance();
         listOfTrader = new LinkedList<>();

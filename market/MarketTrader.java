@@ -22,7 +22,7 @@ public class MarketTrader implements ITrader, Observer {
     private boolean isBankrut;
 
     public MarketTrader() {
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger =  DayChanger.getInstance();
         dayChanger.addObserver(this);
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();

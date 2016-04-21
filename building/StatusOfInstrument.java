@@ -1,6 +1,5 @@
 package building;
 
-import static country.CountryController.dayChanger;
 import country.DayChanger;
 import enumerationClasses.TypeInstrument;
 import java.util.Observable;
@@ -35,7 +34,7 @@ public class StatusOfInstrument implements Observer {
     }
 
     public StatusOfInstrument(TypeInstrument type) {
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger =  DayChanger.getInstance();
         dayChanger.addObserver(this);
         status = Status.CREATING;
         CreatingDayLeft = InstrumentProperty.getQuantityDaysOfBuilding();

@@ -10,7 +10,7 @@ public class LifeBar implements Observer {
     private int health;
 
     public LifeBar() {
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger = DayChanger.getInstance();
         dayChanger.addObserver(this);
     }
 

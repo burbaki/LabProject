@@ -22,6 +22,7 @@ public class Factory extends ResourceBuilding {
         this.typeProduction = EnumConverter.BuildingsToProduction(type);
         requiredProduction = ResourceProperties.getRequiredProduction(typeProduction);
         trader = new FactoryTrader(stock, typeProduction, requiredProduction);
+         log.log(Level.INFO, "Created buildingTrader with {0}", trader.toString());
     }
 
     private boolean readyForProduction() {

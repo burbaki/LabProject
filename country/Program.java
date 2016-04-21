@@ -15,7 +15,7 @@ public class Program {
     {
         CountryController mainCountry = new CountryController();
         System.out.println("go go go");
-        mainCountry.runDays(10);
+        mainCountry.runDays(20);
         System.out.print("1 days passed");
      
        

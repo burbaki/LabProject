@@ -1,6 +1,6 @@
 package market;
 
-import static country.CountryController.dayChanger;
+
 import country.DayChanger;
 import enumerationClasses.TypeProduction;
 import java.util.LinkedList;
@@ -23,7 +23,7 @@ public class OffersManager implements Observer {
         listOfOffer = new LinkedList<>();
         price = new PriceList(listOfOffer);
         this.financialOperationController = financialOperationController;
-        this.dayChanger = country.CountryController.dayChanger;
+        this.dayChanger =  DayChanger.getInstance();
         dayChanger.addObserver(this);
     }
 

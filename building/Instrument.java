@@ -1,6 +1,6 @@
 package building;
 
-import static country.CountryController.dayChanger;
+
 import enumerationClasses.TypeInstrument;
 import java.util.logging.Level;
 import java.util.logging.Logger;
