@@ -40,9 +40,7 @@ public class Factory extends ResourceBuilding {
             for (TypeProduction t : requiredProduction) {
                 stock.giveProduct(t, 1);
             }
-            stock.takeProduct(typeProduction, currentProductionPerDay);
-             log.log(Level.INFO, "Produced {0} kilograms of {1}",
-                new Object[]{currentProductionPerDay, typeProduction});
+            stock.takeProduct(typeProduction, currentProductionPerDay);            
         }
        
     }

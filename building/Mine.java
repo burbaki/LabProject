@@ -41,8 +41,7 @@ public class Mine extends ResourceBuilding {
     public void makeProduction() {
         amountOfDeposits -= currentProductionPerDay;
         stock.takeProduct(typeProduction, currentProductionPerDay);
-        log.log(Level.INFO, "Produced {0} kilograms of {1}",
-                new Object[]{currentProductionPerDay, typeProduction});
+        
     }
 
 }

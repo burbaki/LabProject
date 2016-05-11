@@ -91,7 +91,7 @@ class BuildingTrader implements ITrader, Observer {
         if (stock.GetAmountOfProduct(productForSale) != 0) {
             market.applay(findProductionForSell(), IDTrader);
         }
-        log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
+       
     }
 
     public ProductPack findProductionForSell() {
@@ -123,6 +123,7 @@ class BuildingTrader implements ITrader, Observer {
     @Override
     public void update(Observable o, Object arg) {
         makeDailyOperation();
+         log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
     }
 
     @Override

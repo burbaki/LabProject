@@ -100,6 +100,8 @@ public abstract class ResourceBuilding implements Observer {
         checkInstrumentForDeploy();
         currentProductionPerDay = calculateCurrentProductionPerDay();
         makeProduction();
+        log.log(Level.INFO, "Produced {0} kilograms of {1}",
+                new Object[]{currentProductionPerDay, typeBuilding});
         trader.giveMoney(salaryPerDay);
         log.log(Level.INFO, "spend {0} for pay workers", salaryPerDay);
         // i dont use observer in financeManager class. because i dont sure that production

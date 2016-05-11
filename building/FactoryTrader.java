@@ -28,9 +28,7 @@ public class FactoryTrader extends BuildingTrader {
 
     @Override
     public void makeDailyOperation() {
-        if (stock.GetAmountOfProduct(productForSale) != 0) {
-            market.applay(findProductionForSell(), IDTrader);
-        }
+       super.makeDailyOperation();
         int IDProductionForBuy = findApropriateOffer();
         if (IDProductionForBuy != -1) {
             market.pickUpOffer(IDProductionForBuy, IDTrader);
@@ -38,7 +36,7 @@ public class FactoryTrader extends BuildingTrader {
         } else {
             log.log(Level.INFO, "Dont need resourse , {0} trader", IDTrader);
         }
-        log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
+      
     }
 
     public int findApropriateOffer() {
