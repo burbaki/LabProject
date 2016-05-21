@@ -60,6 +60,9 @@ public class PriceList {
         //priesList.forEach((k, v) -> v = ( ResourceProperties.getBasicValue(k) / allRatio.get(k)));
         for (TypeProduction type : TypeProduction.values()) {
             double newprice = ResourceProperties.getBasicValue(type) / allRatio.get(type);
+            if(Double.isInfinite(newprice))
+                newprice = 0;
+            newprice = Math.round(newprice*10000)/10000;
             priesList.put(type, newprice);
         }
 

@@ -3,6 +3,7 @@ package country;
 import building.BuildingLifecycleManager;
 import enumerationClasses.TypeBuilding;
 import country.CountryController;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -44,17 +45,19 @@ public class BuildingContainer {
         return info;
     }
 
-     public void makeDailyOperation() {
-        checkBuildingBankrut();
+    public void makeDailyOperation() {
+       checkBuildingBankrut();
+       
     }
 
-    private void checkBuildingBankrut() {
-        for (BuildingLifecycleManager b : listOfBuildings) {
-            if (b.readyForDestroy()) {
-                listOfBuildings.remove(b);
-                b.destroy();
-            }
-        }
-    }
-
+    private void  checkBuildingBankrut() {
+       Iterator<BuildingLifecycleManager> iter = listOfBuildings.iterator();
+       while(iter.hasNext())
+       {
+           BuildingLifecycleManager b = iter.next();
+           if(b.readyForDestroy())
+               iter.remove();
+       }      
+        
+    } 
 }

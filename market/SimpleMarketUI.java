@@ -6,6 +6,7 @@
 package market;
 
 import building.Stock;
+import enumerationClasses.TypeProduction;
 import java.util.List;
 
 /**
@@ -16,12 +17,24 @@ public class SimpleMarketUI implements IMarketTraderUI {
 
     @Override
     public int findApropriateOffer(List<Offer> listOfOffers, double money) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int i = (int) (Math.random() % listOfOffers.size());
+        if (listOfOffers.get(i).getPriceOfPack() > money) {
+            return listOfOffers.get(i).getID();
+        } else {
+            return -1;
+        }
     }
 
     @Override
     public ProductPack findProductionForSell(List<Offer> listOfOffers, Stock stock) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypeProduction maxValue = TypeProduction.BOARDS;
+        for (TypeProduction type : TypeProduction.values()) {
+            if (stock.GetAmountOfProduct(type) > stock.GetAmountOfProduct(maxValue)) {
+                maxValue = type;
+            }
+        }
+        double weightForSale = Math.round(stock.GetAmountOfProduct(maxValue) * 0.8);
+        return new ProductPack(weightForSale, maxValue);
     }
 
 }

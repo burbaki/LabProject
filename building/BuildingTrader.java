@@ -84,6 +84,7 @@ class BuildingTrader implements ITrader, Observer {
     @Override
     public void setID(int i) {
         IDTrader = i;
+         log.log( Level.INFO, "Set traders id : {0}", IDTrader);
     }
 
     @Override

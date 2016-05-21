@@ -1,6 +1,8 @@
 package market;
 
+import building.BuildingLifecycleManager;
 import country.DayChanger;
+import java.util.Iterator;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,11 +29,6 @@ public class TraderManager implements Observer {
         count = 0;
     }
 
-    public MarketTrader createMarketTrader() {
-        return new MarketTrader();
-    }
-//add anyone trader
-
     public void addTrader(ITrader trader) {
         if (trader != null) {
             trader.receiveList(listOfOffers);
@@ -47,23 +44,18 @@ public class TraderManager implements Observer {
         for (ITrader t : listOfTrader) {
             t.receiveList(listOfOffers);
         }
-        log.log(Level.INFO,"Sended to all traders list of offers");
-    }
-
-    public void makeTraders(int quantity) {
-        for (int i = 0; i < quantity; i++) {
-            addTrader(createMarketTrader());
-        }
-
+        log.log(Level.INFO, "Sended to all traders list of offers");
     }
 
     public void removeBankrutTraders() {
-        for (ITrader t : listOfTrader) {
+        Iterator<ITrader> iter = listOfTrader.iterator();
+        while (iter.hasNext()) {
+            ITrader t = iter.next();
             if (t.isTraderBankrut()) {
-                listOfTrader.remove(t);
+                iter.remove();
             }
         }
-        log.log(Level.INFO,"removed all bankruts");
+        log.log(Level.INFO, "removed all bankruts");
     }
 
     public List<ITrader> getListOfTraders() {

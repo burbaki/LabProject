@@ -54,6 +54,9 @@ public class CountryController implements Observer {
         buildingContainer.buildBuilding(TypeBuilding.BOARDS);
         buildingContainer.buildBuilding(TypeBuilding.SILICON);
         buildingContainer.buildBuilding(TypeBuilding.STEEL);
+        Market.getInstance().createTrader();
+        Market.getInstance().createTrader();
+        Market.getInstance().createTrader();
         log.info("Create basic buildings \n");
     }
 

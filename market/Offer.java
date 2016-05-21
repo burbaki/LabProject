@@ -8,7 +8,7 @@ public class Offer extends ProductPack {
 
     private static Logger log = Logger.getLogger(Offer.class.getName());
     static int countOfOffers = 0;
-    int idOffer;
+    private int idOffer;
     private double value;
     private final int seller;
     private int buyer;

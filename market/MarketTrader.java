@@ -22,17 +22,18 @@ public class MarketTrader implements ITrader, Observer {
     private boolean isBankrut;
 
     public MarketTrader() {
-        this.dayChanger =  DayChanger.getInstance();
+        this.dayChanger = DayChanger.getInstance();
         dayChanger.addObserver(this);
+        stock = new Stock();
         traderUI = new SimpleMarketUI();
         wallet = new TraderWallet();
         this.market = Market.getInstance();
-        market.registerTrader(this);
+
     }
 
     public void setID(int ID) {
         IDTrader = ID;
-        log.log( Level.INFO, "Set trader's id : {0}", ID);
+        log.log(Level.INFO, "Set traders id : {0}", IDTrader);
     }
 
     public void setMarket(Market market) {
@@ -48,18 +49,16 @@ public class MarketTrader implements ITrader, Observer {
         return this.IDTrader;
     }
 
-    public int findApropriateOffer() {
-        return traderUI.findApropriateOffer(listOfOffers, wallet.getMoneyBalance());
-    }
-
-    public ProductPack findProductionForSell() {
-        return traderUI.findProductionForSell(listOfOffers, stock);
-
-    }
 
     public void makeDailyOperation() {
-        market.applay(findProductionForSell(), IDTrader);
-        market.pickUpOffer(findApropriateOffer(), IDTrader);
+        ProductPack pack = traderUI.findProductionForSell(listOfOffers, stock);
+        if (pack != null) {
+            market.applay(pack, IDTrader);
+        }
+        int idOffer = traderUI.findApropriateOffer(listOfOffers, wallet.getMoneyBalance());
+        if (idOffer != -1) {
+            market.pickUpOffer(idOffer, IDTrader);
+        }
         log.log(Level.INFO, " Trader {0} maked DailyOperation", IDTrader);
     }
 
@@ -102,8 +101,7 @@ public class MarketTrader implements ITrader, Observer {
     @Override
     public void setBankrut() {
         log.log(Level.INFO, "Trader {0} is bankrut", toString());
-        isBankrut = true;
-        unsubscribe();
+        isBankrut = true;        
     }
 
     @Override

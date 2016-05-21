@@ -66,6 +66,7 @@ public class DayChanger extends Observable {
         for (Observer o : othersObservers) {
             o.update(this, counterOfDays);
         }
+        log.log(Level.INFO, " {0} day end", counterOfDays);
     }
 
     @Override
@@ -86,7 +87,6 @@ public class DayChanger extends Observable {
             buildingObservers.remove(o);
         } else if (o instanceof ITrader) {
             traderObservers.remove(o);
-
         } else {
             othersObservers.remove(o);
         }
