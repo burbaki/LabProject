@@ -28,18 +28,23 @@ public class FactoryTrader extends BuildingTrader {
 
     @Override
     public void makeDailyOperation() {
-       super.makeDailyOperation();
-        int IDProductionForBuy = findApropriateOffer();
+        super.makeDailyOperation();
+        int IDProductionForBuy = 0;
+        try {
+            IDProductionForBuy = findApropriateOffer();
+        } catch (NoMoneyException ex) {
+            Logger.getLogger(FactoryTrader.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (IDProductionForBuy != -1) {
             market.pickUpOffer(IDProductionForBuy, IDTrader);
             System.out.println(stock);
         } else {
             log.log(Level.INFO, "Dont need resourse , {0} trader", IDTrader);
         }
-      
+
     }
 
-    public int findApropriateOffer() {
+    public int findApropriateOffer() throws NoMoneyException {
         double minRes = stock.GetAmountOfProduct(requiredResourse.get(0));
         TypeProduction minType = requiredResourse.get(0);
         for (TypeProduction type : requiredResourse) {
@@ -57,6 +62,8 @@ public class FactoryTrader extends BuildingTrader {
                 }
             }
         }
-        return -1;
+        throw new NoMoneyException("no money", this.getMoneyBalance());
+        //return -1;
     }
+
 }
